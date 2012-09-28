@@ -1,0 +1,128 @@
+% THIS IS SIGPROC-SP.TEX - VERSION 3.1
+% WORKS WITH V3.2SP OF ACM_PROC_ARTICLE-SP.CLS
+% APRIL 2009
+%
+% It is an example file showing how to use the 'acm_proc_article-sp.cls' V3.2SP
+% LaTeX2e document class file for Conference Proceedings submissions.
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V3.2SP) *DOES NOT* produce:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) Page numbering
+% ---------------------------------------------------------------------------------------------------------------
+% It is an example which *does* use the .bib file (from which the .bbl file
+% is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission,
+% you need to 'insert'  your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% Questions regarding SIGS should be sent to
+% Adrienne Griscti ---> griscti@acm.org
+%
+% Questions/suggestions regarding the guidelines, .tex and .cls files, etc. to
+% Gerald Murray ---> murray@hq.acm.org
+%
+% For tracking purposes - this is V3.1SP - APRIL 2009
+
+\documentclass{acm_proc_article-sp}
+
+\begin{document}
+
+\title{Renewable and Cooling Aware Geographical Load Balancing}
+\numberofauthors{2} 
+\author{
+% You can go ahead and credit any number of authors here,
+% e.g. one 'row of three' or two rows (consisting of one row of three
+% and a second row of one, two or three).
+%
+% The command \alignauthor (no curly braces needed) should
+% precede each author name, affiliation/snail-mail address and
+% e-mail address. Additionally, tag each line of
+% affiliation/address with \affaddr, and tag the
+% e-mail address with \email.
+%
+% 1st. author
+\alignauthor
+Michael Hirshleifer\\
+       \affaddr{California Institute of Technology}\\
+       \affaddr{1200 E California Blvd}\\
+       \affaddr{Pasadena, California}\\
+       \email{111mth@caltech.edu}
+% 2nd. author
+\alignauthor
+Yizhen Wang\\
+       \affaddr{California Institute of Technology}\\
+       \affaddr{1200 E California Blvd}\\
+       \affaddr{Pasadena, California}\\
+       \email{ywang3@caltech.edu}
+}
+\date{27 August 2012}
+
+\maketitle
+\begin{abstract}
+This paper explores the benefits of geographical load balancing in terms of efficiently using renewable energy. Practical concerns on dynamic cooling efficiency and dynamic electricity price are included in the model. The problem is modeled using a convex optimization based framework parameterized using real workload, temperature, solar and wind traces. The result suggests that after using geographical load balancing, the renewable energy usage increases significantly and grid usage decreases significantly. Such result holds across seasons.
+\end{abstract}
+
+\section{Introduction}
+
+\section{Setup}
+\subsection{The workload}
+
+\subsection{The availability of renewable energy}
+\subsection{The internet-scale system}
+\subsubsection{Delay cost}
+The delay cost represents the lost of revenue incurred due to the delay in processing requests. It comprises the propagation delay $d_{ij}$ from source $j$ to date center $i$ and the queueing delay at $i$.
+The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of 200km/ms plus a constant term 5ms. The queue delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $m_i(t)$ homogeneneous servers of service rate \mbox{$\mu_i$ = $0.1(ms)^{-1}$}.
+
+\subsubsection{Cooling optimization}
+The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}C$. A typical data center uses both air cooling and chilled water cooling. We define the term "IT demand" to be the energy consumption of running active servers. Let $x = x_a + x_c$ be the total IT demand, $x_a$ be the IT demand cooled by air cooling and $x_c$ cooled by chilled water. This model finds the best division between $x_a$ and $x_c$. 
+
+Quantitatively, the energy consumption of air cooling is given by 
+\begin{equation}
+c_a(x) = kx^3, 0 \leq x \leq \bar{x}, k > 0
+\end{equation}
+The parameter $k$ is proportional to the temperature gradient between the inside and outside air. The $\bar{x}$ corresponds to the maximum IT demand of the servers cooled by air cooling. The cap $\bar{x}$ is proportional to both the temperature gradient and the maximum air flow rate. In our experiment, $\bar{x}$ is set such that when the outside temperature is $20^{\circ}C$ lower than $T$, the data center can rely on air cooling entirely at full workload.
+
+The energy consumption of chilled water cooling, on the other hand, is almost linear to the IT demand empirically, i.e. 
+\begin{equation}
+c_c(x) = \gamma x
+\end{equation}
+%Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
+
+The optimal cooling portfolio can be written as follows:
+\begin{equation}
+c(x) =  \min_{x_c \in [0,x]} \gamma(x-x_c)^+ + kx_2^3      
+\end{equation}
+which yields
+$$
+c(x) = \left\{ \begin{array}{ll}
+         kx^3 & \mbox{if $x \geq x_s$}\\
+        kx_s^3 + \gamma (x-x_s) & \mbox{otherwise}\end{array} \right.
+$$
+where $x_s = \min \left\{\sqrt{\gamma/3k}, \bar{x}\right\}$ is the threshold when chiller cooling is necessary.
+\subsubsection{Energy cost}
+The energy cost is the cost of both running active servers and keeping them at constant working temperature. The data centers pay no cost for renewable energy assuming that each data center has its own renewable energy generation facilities and pay no maintanence cost. Thus the energy cost is for using energy from the grid and can be represented as
+\begin{equation}
+p_i(x_i(t) + c(x_i(t)) - r_i(t))^+
+\end{equation}  
+where $p_i$ is the price of electricity, $x_i(t)$ is energy consumption of active servers in the time interval, $c(x_i(t))$ is the energy usage for cooling and $r_i(t)$ is the renewable energy availability. In our model, $p_i$ is set to be constant according to the real statistics of each state.
+
+\subsubsection{Switching cost}
+The switching cost models the delay and wear-and-tear cost when switching on/off servers. In our model, the workload at each data center is updated every 10 minutes. To avoid too frequent switching of server status, we define the switching cost to be
+$$\beta(x_i(t+1) - x_i(t))^+$$
+where $\beta$ tells the weight of switching cost. In our experiment, $\beta = 6$.
+
+\subsubsection{Storage}
+@@@@ To be filled
+\subsubsection{Total cost}
+
+
+\section{Results}
+\subsection{Impact of Cooling-aware GLB}
+\subsection{CO2 savings from GLB}
+\subsection{Role of storage}
+\section{References}
+
+\end{document}
