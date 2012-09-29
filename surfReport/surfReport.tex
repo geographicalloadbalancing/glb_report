@@ -88,7 +88,20 @@ We find that using geographical load balancing lets data centers more effectivel
 \end{abstract}
 
 \section{Introduction}
-Building cost-saving and environmental-friendly data centers has become an unprecedentedly pressing challenge for the ICT industry. Energy consumption marks a major portion of a data center's running cost \cite{datacenter}, while the corresponding carbon emission of electricity usage concerns the society. As the needs for data centers grow rapidly, we will create enormous economic benefit for the ICT firms and fulfill our responsibility of protecting the environment if we can significantly reduce the energy consumption.
+Building cost-saving and environmentally friendly data centers has become a pressing challenge for the ICT industry.
+Energy consumption constitutes much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage .of electricity usage concerns society at large.
+
+<--combine-->
+Data centers require a substantial amount of energy, varying with load (requests processed per second). There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency. Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demands, so excess demand must be satisfied by buying electricity off the grid. (Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.)
+<--combine-->
+
+As the needs for data centers grow rapidly, we will create enormous economic benefit for the ICT firms and fulfill our responsibility of protecting the environment if we can significantly reduce the energy consumption.
+Wierman
+<--combine-->
+Geographical load balancing provides goody gooder stuff. Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
+
+“Green” routing algorithms would benefit Internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, considering that data centers are expected to use several percent of U.S. and world electricity output, and that they currently use mostly non-renewable energy.
+<-->
 
 Using renewable energy at data centers is one viable option. In fact, some data centers are already partly operated on green energy. Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. Such a model routes the requests to where green energy is available and uses the renewables efficiently, thus requires fairly low green energy supply. 
 
