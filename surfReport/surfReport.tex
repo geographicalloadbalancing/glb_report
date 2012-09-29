@@ -130,24 +130,23 @@ Let $J$ be the set of sources of requests. Each continental state in US has a so
 \subsection{The availability of renewable energy}
 We have three major considerations when modeling the availability of renewable energy:  
 
-First, the weather at the data centers is crucial as it determines the renewable energy output per plant unit. We use real traces of wind speed and solar irradiance obtained from \cite{renew1} \cite{renew2}. The measurements are in 10 minutes interval. The rate of renewable energy generation per plant unit at each data center is then set to be proportional to the weather data respectively.
+First, the weather at the data centers is crucial as it determines the renewable energy output per plant unit. We use real traces of wind speed and solar irradiance obtained from \cite{renew1} \cite{renew2} @@@@@@[Is this true? I thought the traces were (calculated) power output.]. The measurements have a granularity of 10 minute. The rate of renewable energy generation per plant unit at each data center is then set to be proportional to the weather data respectively.
 
 Second, the size of the renewable energy plant matters. We scale the renewable generation capacity such that the total renewable energy is $c$ times as much as the total energy demand to process all requests. In our experiment, $c$ varies in [0.5, 4] with step length of 0.5.  
 
-Third, we need to find the optimal ratio of solar and wind energy to power the data centers. Previous research \cite{adam:GLB} suggests that 80\% of wind and 20\% of solar fits the data center energy consumption characteristics nicely. We adopt this ratio in our experiment throughout.
+Third, we need to find the optimal ratio of solar and wind energy to power the data centers. Previous research \cite{adam:GLB} suggests that a mix of 80\% of wind and 20\% of solar fits the data center energy consumption characteristics nicely. We adopt this ratio in our experiment throughout.
 
 \subsection{The internet-scale system}
-The internet-scale system consists of a set $N$ of 10 data centers at the Google data center locations in the following states: California, Washington, Oregon, Illinois, Georgia, Virginia, Texas, Florida, North Carolina and South Carolina. The number of servers $X_i$ at data center $i$ is set to be twice as much as the peak load at $i$ if all requests are routed to the nearest data centers.
+The internet-scale system consists of a set $N$ of 10 data centers at the Google data center locations in the following states: California, Washington, Oregon, Illinois, Georgia, Virginia, Texas, Florida, North Carolina, and South Carolina. The number of servers $X_i$ at data center $i$ is set to be twice as much as the peak load at $i$ if all requests are routed to the nearest data centers.
 
-The system will decide 1) the routing plan $\lambda_{ij}(t)$ and 2) the number of active servers $x_i(t)$ so as to minimize the total cost.
-The total cost is the sum of delay cost, energy cost and switching cost.
+The optimization will determine the routing plan $\lambda_{ij}(t)$ and the number of active servers $x_i(t)$ that minimizes the total cost (the sum of delay cost, energy cost, and switching cost).
 
 \subsubsection{Delay cost}
 The delay cost represents the lost of revenue incurred due to the delay in processing requests. It comprises the propagation delay $d_{ij}$ from source $j$ to date center $i$ and the queuing delay at $i$.
-The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of 200km/ms plus a constant term 5ms. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1(ms)^{-1}$}.
+The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of 200km/ms@@@@fmt plus a constant term 5ms. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1(ms)^{-1}$}.
 
 \subsubsection{Cooling optimization}
-The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}C$. A typical data center uses both air cooling and chilled water cooling. Let $x = x_a + x_c$ be the total number of active servers, $x_a$ be the number of those cooled by air cooling and $x_c$ cooled by chilled water. This model finds the best division between $x_a$ and $x_c$. 
+The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}C@@@@@fmt$. A typical data center uses both air cooling and chilled water cooling. Let $x = x_a + x_c$ be the total number of active servers, $x_a$ be the number of those cooled by air cooling and $x_c$ cooled by chilled water. This model finds the best division between $x_a$ and $x_c$. 
 
 Quantitatively, the energy consumption of air cooling is given by 
 \begin{equation}
@@ -155,7 +154,7 @@ c_a(x) = kx^3, 0 \leq x \leq \bar{x}, k > 0
 \end{equation}
 The parameter $k$ is proportional to the temperature gradient between the inside and outside air. The $\bar{x}$ corresponds to the maximum number of the servers that can be cooled by air cooling alone. The cap $\bar{x}$ is proportional to both the temperature gradient and the maximum air flow rate. In our experiment, the air flow rate is set such that when the outside temperature is $20^{\circ}C$ lower than $T$, the data center can rely on air cooling entirely at full workload.
 
-The energy consumption of chilled water cooling, on the other hand, is almost linear to the IT demand empirically, i.e. 
+The energy consumption of chilled water cooling, on the other hand, is almost linear to the IT demand empirically, i.e.,
 \begin{equation}
 c_c(x) = \gamma x
 \end{equation}
@@ -163,7 +162,7 @@ c_c(x) = \gamma x
 
 The optimal cooling portfolio can be written as follows:
 \begin{equation}
-c(x) =  \min_{x_c \in [0,x]} \gamma(x-x_c)^+ + kx_2^3      
+c(x) =  \min_{x_c \in [0,x]} \gamma(x-x_c)^+ + kx_2^3
 \end{equation}
 which yields
 $$
@@ -173,12 +172,12 @@ c(x) = \left\{ \begin{array}{ll}
 $$
 where $x_s = \min \left\{\sqrt{\gamma/3k}, \bar{x}\right\}$ is the threshold when chiller cooling is necessary.
 
-To explore the impact of seasonality on the performance of the cooling model, we use two sets of temperature data. One is taken from the first week of Jan, 2012 from \cite{temp}; the other is take from the first week of July, 2012. The measurements are taken hourly.
+To explore the impact of seasonality on the performance of the cooling model, we use two sets of temperature data. One is taken from the first week of January 2012 from \cite{temp}; the other is take from the first week of July 2012. The measurements are taken hourly.
 
 \begin{figure*}
 \centering
 \epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
-\caption{A frame shot of the visualization page.}
+\caption{Screenshot of the visualization, running in the Chromium web browser.}
 \end{figure*}
 \subsubsection{Energy cost}
 The energy cost is the cost of both running active servers and keeping them at constant working temperature. The data centers pay no cost for renewable energy assuming that each data center has its own renewable energy generation facilities and pay no maintenance cost. Thus the energy cost is for using energy from the grid and can be represented as
