@@ -128,6 +128,34 @@ Third, the performance of Cooling-aware GLB is better than using energy storage,
 \subsection{More details on the visualization blahblablablablablablablablahhh}
 @@@@@@@
 
+\subsubsection{Objectives}
+Build a computer simulation of the whole data center routing system, that can use real-world data on wind and solar power output, grid electricity prices, and Internet request volume over time at various locations. Devise and implement comprehensible visualizations of the multi-dimensional simulation data. The resulting software can be used to test effectiveness of and refine routing algorithms.
+
+The software can then be used to answer questions about extensions to the model that would be useful when putting it into practice, such as—
+\begin{itemize}
+\item incorporating other kinds of renewables into the model
+\item no longer treating data centers as static. In the long run, where should we build new data centers, and what local renewables and energy storage systems do we use?
+\item finding the optimal control timescale. It is costly to switch on and off servers, so the current algorithms only change routing every fixed period, which is suboptimal. This significantly restricts the savings that follow-the-renewables routing can yield, but the topic hasn’t yet been explored deeply. Obviously being able to simulate the whole system helps for this.
+\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the Internet, one might expect solar power to dominate. But Wierman’s paper showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night you are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
+\end{itemize}
+
+\subsubsection{Work plan @@@@@@@@@@@}
+Work completed since the start of SURF:
+\begin{itemize}
+\item I wrote a Scala script to generate an animated SVG map according to input data
+\item The script currently reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces. It was tested and verified to work in Firefox, Chromium, and the W3C SVG validator.
+\end{itemize}
+
+Remaining tasks:
+\begin{itemize}
+\item Complete the simulation and visualization software. We have yet to incorporate the output of the Matlab scripts (that is, the routings optimized according to the various algorithms); currently that is faked with randomly-generated data.
+\item We also intend to create a wrapper web page to make the simulation easier to use, by letting users zoom into, pan, play, pause, and seek into the animation. We may also include other features like showing/hiding types of map elements.
+\item Consider what variations in the algorithms and model are worth exploring.
+\item Use the software to explore variations in the algorithms, and their performance under variations of the model.
+\end{itemize}
+
+\subsubsection{Measure of success}
+A successful result will consist of simulation and visualization software that can evaluate the performance of routing algorithms, under conditions defined by actual data on data center placement, renewable power output over time and location, workload over time, etc.. The software will help develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
 
 \section{Setup}
 We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
