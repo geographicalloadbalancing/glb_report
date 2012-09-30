@@ -105,7 +105,7 @@ Geographical load balancing provides goody gooder stuff. Flexibility in routing 
 
 Using renewable energy at data centers is one viable option. In fact, some data centers are already partly operated on green energy. Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. Such a model routes the requests to where green energy is available and uses the renewables efficiently, thus requires fairly low green energy supply. 
 
-However, the previous GLB model only considers the energy cost to process data requests. In reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The cost of cooling largely depends on the weather at data center locations. Thus we think of exploiting the geographical heterogeneity of the data centers to reduce cooling cost.
+However, the previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The cost of cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost.
 
 This paper illustrates that, a new geographical load balancing model, which considers energy cost in cooling, is able to reduce the total cost significantly compared to previous models. Furthermore, the improvement in green energy usage leads to much lower carbon emission rate.
 
@@ -119,6 +119,9 @@ Second, the Cooling-aware GLB model leads to significant carbon emission savings
 
 Third, the performance of Cooling-aware GLB is better than using energy storage, both in total cost and in carbon emission, when the aggregate renewable supply is enough to power data centers yet not in vast surplus. This result is from a systematic comparison between the Cooling-aware GLB system and the storage system with various storage capacity in reasonable range. The result suggests that Cooling-aware GLB has a clear advantage over the storage model when the renewable energy generation and storage facilities are not widely established. It requires much less investment in infrastructure and hence can be implemented more easily than the storage model.
 
+
+\subsection{More details on the visualization blahblablablablablablablablahhh}
+@@@@@@@
 
 
 \section{Setup}
@@ -255,8 +258,8 @@ Our numerical experiment often yields large size of time series data that descri
 \subsection{Development environment}
 We want our visualization to satisfy the following requirement. First, it can animate a time series of data fluently. Second, it can easily and efficiently convert the raw input, usually the experiment result in .csv or .netCDF format, to the desired format recognized by the script. Third, it can be integrated into web page or other form of presentation easily. 
 
-The final visualization is in Scalable Vector Graphics (SVG) form, a high quality graphics format supporting various animations and flexible edition. The back-end processing, which involves converting input file format and generating the SVG script, is done in Scala. This animation can be embedded into HTML web page. The user can control the animation using the interface on the web page.
-   
+The final visualization is in Scalable Vector Graphics (SVG) format, a high-quality XML-based vector graphics format supporting various animations and flexible edition@@@@@@@. The back-end processing, which involves converting input file format and generating the SVG script, is done in the Scala programming language. This animation can be embedded into an XHTML web page. The user can control the animation using the interface on the web page (@@@@using Javascript).
+
 \subsection{Graphical representation details}
 The visualization page consists of three components: an animation showing the dynamic status of the geographical load balancing system, a line plot showing the aggregate statistics of energy supply and demand, and a progress bar allowing progress scroll and control.
 
