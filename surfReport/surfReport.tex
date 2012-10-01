@@ -88,25 +88,42 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 \end{abstract}
 
 \section{Introduction}
-Building cost-saving and environmentally friendly data centers has become a pressing challenge for the ICT industry.
-Energy consumption constitutes much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage concerns society at large.
 
-<--combine-->
-Data centers require a substantial amount of energy, varying with load (requests processed per second). There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency. Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demands, so excess demand must be satisfied by buying electricity off the grid. (Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.)
-<--combine-->
 
-As the needs for data centers grow rapidly, reducing energy consumption
-will create enormous economic benefit for the ICT firms and protect the environment.
-Wierman
-<--combine-->
-Geographical load balancing provides goody gooder stuff. Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
+\subsection{The problem}
+	\subsubsection{Energy cost is important for DCs.}
+		Building cost-saving and environmentally friendly data centers has become a pressing challenge for the ICT industry.
+		Energy consumption accounts for much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage concerns society at large.
+		As the needs for data centers grow rapidly, reducing energy consumption will create enormous economic benefit for the ICT firms and protect the environment.
+		“Green” routing algorithms would benefit Internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, considering that data centers are expected to use several percent of U.S. and world electricity output, and that they currently use mostly non-renewable energy.
+		
+		\subsubsubsection{Servers use energy to process requests}
+			Data centers require a substantial amount of energy, varying with load (requests processed per second).
+		\subsubsubsection{Energy usage for cooling also matters}
+			Depends on weather and geography
+			
+			The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The cost of cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost.
+	\subsubsection{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
+		\subsubsubsection{Renewable vs. grid energy}
+			Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demand, so excess demand must be satisfied by buying electricity off the grid. (Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.)
+			
+			
+			Using renewable energy at data centers is one viable option. In fact, some data centers are already partly operated on green energy. Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. Such a model routes the requests to where green energy is available and uses the renewables efficiently, and thus requires fairly low green energy supply. 
+	\subsubsection{Need for load balancing between DCs}
+		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency.
 
-“Green” routing algorithms would benefit Internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, considering that data centers are expected to use several percent of U.S. and world electricity output, and that they currently use mostly non-renewable energy.
-<-->
 
-Using renewable energy at data centers is one viable option. In fact, some data centers are already partly operated on green energy. Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. Such a model routes the requests to where green energy is available and uses the renewables efficiently, and thus requires fairly low green energy supply. 
 
-The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The cost of cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost.
+\subsection{Previous work}
+	\subsection{Geographical load balancing}
+		Geographical load balancing provides goody gooder stuff.
+		Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
+
+		\subsubsubsection{Can use almost entirely renewables}
+		\subsubsubsection{Convex optimization framework; solve numerically}
+
+
+
 
 This paper illustrates that a new geographical load balancing model which considers energy cost in cooling is able to reduce the total cost significantly compared to previous models. This improvement in green energy usage leads to much lower carbon emissions.
 
