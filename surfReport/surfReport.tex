@@ -120,7 +120,22 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 		\paragraph{Convex optimization framework; solve numerically}
 
 
+\subsection{Visualization}
 
+
+\subsubsection{Objectives}
+Build a computer simulation of the whole data center routing system, that can use real-world data on wind and solar power output, grid electricity prices, and Internet request volume over time at various locations.
+Devise and implement comprehensible visualizations of the multi-dimensional simulation data.
+The resulting software can be used to test effectiveness of and refine routing algorithms.
+
+A successful result will consist of simulation and visualization software that can evaluate the performance of routing algorithms, under conditions defined by actual data on data center placement, renewable power output over time and location, workload over time, etc..
+The software will help develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
+
+
+
+
+
+\subsection{Cooling-aware GLB}
 
 This paper illustrates that a new geographical load balancing model which considers energy cost in cooling is able to reduce the total cost significantly compared to previous models. This improvement in green energy usage leads to much lower carbon emissions.
 
@@ -133,48 +148,6 @@ First, the new GLB model, the Cooling-aware GLB model, reduces the total cost of
 Second, the Cooling-aware GLB model leads to significant carbon emission savings. The carbon emission level can be reduced by as much as more than 50\% compared to the old models. The new GLB model makes more informed decision than the old GLB model as it includes the energy for cooling. Because GLB models reduces energy cost at the expense of slight increase in network delay cost, the environmental impact is much greater than the cost impact. If the firms are given incentives for cutting carbon emission, the environmental impact can lead to economic success.  
 
 Third, the performance of Cooling-aware GLB is better than using energy storage, both in total cost and in carbon emission, when the aggregate renewable supply is enough to power data centers yet not in vast surplus. This result is from a systematic comparison between the Cooling-aware GLB system and the storage system with various storage capacity in reasonable range. The result suggests that Cooling-aware GLB has a clear advantage over the storage model when the renewable energy generation and storage facilities are not widely established. It requires much less investment in infrastructure and hence can be implemented more easily than the storage model.
-
-
-\subsection{More details on the visualization blahblablablablablablablablahhh}
-@@@@@@@
-
-\subsubsection{Objectives}
-Build a computer simulation of the whole data center routing system, that can use real-world data on wind and solar power output, grid electricity prices, and Internet request volume over time at various locations. Devise and implement comprehensible visualizations of the multi-dimensional simulation data. The resulting software can be used to test effectiveness of and refine routing algorithms.
-
-The software can then be used to answer questions about extensions to the model that would be useful when putting it into practice, such as—
-\begin{itemize}
-\item incorporating other kinds of renewables into the model
-\item no longer treating data centers as static. In the long run, where should we build new data centers, and what local renewables and energy storage systems do we use?
-\item finding the optimal control timescale. It is costly to switch on and off servers, so the current algorithms only change routing every fixed period, which is suboptimal. This significantly restricts the savings that follow-the-renewables routing can yield, but the topic hasn’t yet been explored deeply. Obviously being able to simulate the whole system helps for this.
-\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the Internet, one might expect solar power to dominate. But Wierman’s paper showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night you are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
-\end{itemize}
-
-\subsubsection{Work plan @@@@@@@@@@@}
-
-
-I wrote a Scala script to generate an animated SVG map according to input data
-
-
-The script reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces.
-
-@@@@includes the output of the Matlab scripts (that is, the routings optimized according to the various algorithms
-
-It was tested and verified to work in Firefox, Chromium, and the W3C SVG validator.
-
-
-\item We also intend to create a wrapper web page to make the simulation easier to use, by letting users zoom into, pan, play, pause, and seek into the animation. We may also include other features like showing/hiding types of map elements.
-
-
-Remaining tasks:
-\begin{itemize}
-\item Consider what variations in the algorithms and model are worth exploring.
-\item Use the software to explore variations in the algorithms, and their performance under variations of the model.
-\end{itemize}
-
-\subsubsection{Measure of success}
-A successful result will consist of simulation and visualization software that can evaluate the performance of routing algorithms, under conditions defined by actual data on data center placement, renewable power output over time and location, workload over time, etc.. The software will help develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
-
-
 
 \section{Setup}
 We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
@@ -307,6 +280,15 @@ We will evaluate the results based on 1) the total cost; 2) the grid (brown) ene
 Our numerical experiment often yields large size of time series data that describes routing plans and data center running status. These data are hard to interpret when in matrix form. Therefore we developed an visualization tool to illustrate these data. Such data visualization allows us to recognize the key characteristics of the optimal solution quickly. It also works as a simple check for the correctness of the solution; we can spot some obviously abnormal behaviors of the solution if they exist. 
 
 
+@@@@I wrote a Scala script to generate an animated SVG map according to input data
+
+The script reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces @@@and includes the output of the Matlab scripts (that is, the routings optimized according to the various algorithms).
+
+It was tested and verified to work in Firefox, Chromium, and the W3C SVG validator.
+
+We also wrote a wrapper web page to make the simulation easier to use, by letting users play, pause, and seek into the animation. Possible enhancements could include zooming, panning, and showing/hiding types of map elements.
+
+
 \subsection{Development environment}
 We want our visualization to satisfy the following requirement. First, it can animate a time series of data fluently. Second, it can easily and efficiently convert the raw input, usually the experiment result in .csv or .netCDF format, to the desired format recognized by the script. Third, it can be integrated into web page or other form of presentation easily. 
 
@@ -385,6 +367,15 @@ Figure 5 illustrates the trend of optimal costs of these models with respect to 
 Figure 6 shows the comparison of brown energy usage of each model. The result suggests that the Cooling-aware GLB model needs less energy from the grid compared to the 6-hour-storage curve when the total renewable supply is less than 1.5 times of the total IT power demand. Moreover, it needs less grid energy than the total renewable energy compared to the 3-hour-storage model in almost the entire renewable availability interval except when the renewable availability coefficient is 0.5. The environmental impact advantage of our new model is even more significant compared to the cost advantage.  
 
 We thus can conclude that our model is better than the storage model when the renewable generation facilities are not saturatedly established yet; it requires less prior investment on infrastructures.
+
+\section{Future work}
+The software can then be used to answer questions about extensions to the model that would be useful when putting it into practice, such as—
+\begin{itemize}
+\item incorporating other kinds of renewables into the model
+\item no longer treating data centers as static. In the long run, where should we build new data centers, and what local renewables and energy storage systems do we use?
+\item finding the optimal control timescale. It is costly to switch on and off servers, so the current algorithms only change routing every fixed period, which is suboptimal. This significantly restricts the savings that follow-the-renewables routing can yield, but the topic hasn’t yet been explored deeply. Obviously being able to simulate the whole system helps for this.
+\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the Internet, one might expect solar power to dominate. But Wierman’s paper showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night you are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
+\end{itemize}
 
 \bibliographystyle{abbrv}
 \bibliography{surfReport}
