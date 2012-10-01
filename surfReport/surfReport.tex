@@ -106,20 +106,17 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency.
 	\subsubsection{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
 		\paragraph{Renewable vs. grid energy}
-			Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demand, so excess demand must be satisfied by buying electricity off the grid. (Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.)
+			Currently, data centers are powered mainly by buying electricity off the grid. Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.
 			
-			
-			Using renewable energy at data centers is one viable option. In fact, some data centers are already partly operated on green energy. Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. Such a model routes the requests to where green energy is available and uses the renewables efficiently, and thus requires fairly low green energy supply. 
-
-
+			However, some data centers are already partly operated on green energy. Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demand, so excess demand must be satisfied by buying electricity off the grid.
 
 
 \subsection{Previous work}
 	\subsubsection{Geographical load balancing}
 		Geographical load balancing provides goody gooder stuff.
 		Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
-
 		\paragraph{Can use almost entirely renewables}
+			Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. 
 		\paragraph{Convex optimization framework; solve numerically}
 
 
