@@ -139,7 +139,7 @@ Third, the benefit of considering cooling is better than that of adding energy s
 \section{Setup}
 We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
 \subsection{The workload}
-Let $J$ be the set of sources of requests. Each continental state in US has a source of request located at its geographical center. We quantify the amount of request by $L_j(t)$, the mean arrival rate from source $j \in J$ at time interval $t$. $L_j(t)$ is estimated using real-world traces. The base trend of the workload is taken from a trace at Hewlett-Packard Labs, then the workload of each request source is scaled proportionately to the population of the state, following by a shift along the time dimension according to the timezone.
+Let $J$ be the set of sources of requests. Each of 48 U.S. states is modeled as having a source of web requests located at its geographical center. The request volume is $L_j(t)$, the mean arrival rate from source $j \in J$ at time interval $t$. $L_j(t)$ is estimated using real-world traces. The base trend of the workload is taken from a trace at Hewlett-Packard Labs, then the workload of each request source is scaled proportionately to the population of the state, following by a shift along the time dimension according to the timezone.
 
 \subsection{The availability of renewable energy}
 We have three major considerations when modeling the availability of renewable energy:
@@ -266,21 +266,16 @@ We will evaluate the results based on 1) the total cost; 2) the grid (brown) ene
 \section{Visualization}
 Our numerical experiment generates time series describing routing plans and data center activity. Due to the large quantity of data, the output is hard to interpret when in matrix form. Therefore we developed a visualization tool to illustrate the output and help us recognize the key characteristics of the optimal solution quickly. It also works as a simple check for the correctness of the solution: we can spot some obviously abnormal behaviors of the output.
 
+\subsection{Technical description}
+The output visualization is in Scalable Vector Graphics (SVG) format, a high-quality XML-based vector graphics format supporting fluid animations that display time-series data. This animation can be embedded into a web page.
 
-@@@@I wrote a Scala script to generate an animated SVG map according to input data
+We also wrote a wrapper XHTML web page to make the simulation easier to use. The user can control the animation (play, pause, or seek into the animation) using the interface on the web page (implemented using Javascript). Possible enhancements could include zooming, panning, and showing/hiding types of map elements.
 
-The script reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces @@@and includes the output of the Matlab scripts (that is, the routings optimized according to the various algorithms).
+Both components work in the Chromium web browser and pass the W3C validators.
 
-We also wrote a wrapper web page to make the simulation easier to use, by letting users play, pause, and seek into the animation. Possible enhancements could include zooming, panning, and showing/hiding types of map elements.
+The back-end script that generates the SVG map from input data is written in the Scala programming language. The script reads in and displays data center locations, client (request source) locations, real solar- and wind-generation traces, and the routings optimized according to the various algorithms (from the output of the Matlab optimizations). We are provided the raw input data in CSV format; Matlab outputs are exported to the NetCDF format for reading into Scala.
 
-Both components work in Chromium and pass the W3C SVG validator.
-
-
-
-\subsection{Technologies used}
-We want our visualization to satisfy the following requirement. First, it can animate a time series of data fluently. Second, it can easily and efficiently convert the raw input, usually the experiment result in .csv or .netCDF format, to the desired format recognized by the script. Third, it can be integrated into web page or other form of presentation easily.
-
-The final visualization is in Scalable Vector Graphics (SVG) format, a high-quality XML-based vector graphics format supporting various animations and flexible edition@@@@@@@. The back-end processing, which involves converting input file format and generating the SVG script, is done in the Scala programming language. This animation can be embedded into an XHTML web page. The user can control the animation using the interface on the web page (@@@@using Javascript).
+We use as a background a map \cite{wikimap} of the 48 contiguous United States obtained from Wikimedia Commons. Points on the map correspond to real-world $(latitude, longitude)$ coordinates according to a mathematical transformation specified with the map; this allows us to draw physical locations at the correct positions on the map.
 
 \subsection{Graphical representation details}
 The visualization page consists of three components: an animation showing the dynamic status of the geographical load balancing system, a line plot showing the aggregate statistics of energy supply and demand, and a progress bar allowing progress scroll and control.
