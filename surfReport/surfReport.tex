@@ -150,22 +150,31 @@ The software can then be used to answer questions about extensions to the model 
 \end{itemize}
 
 \subsubsection{Work plan @@@@@@@@@@@}
-Work completed since the start of SURF:
-\begin{itemize}
-\item I wrote a Scala script to generate an animated SVG map according to input data
-\item The script currently reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces. It was tested and verified to work in Firefox, Chromium, and the W3C SVG validator.
-\end{itemize}
+
+
+I wrote a Scala script to generate an animated SVG map according to input data
+
+
+The script reads in and displays data center locations, client (request source) locations, and real solar- and wind-generation traces.
+
+@@@@includes the output of the Matlab scripts (that is, the routings optimized according to the various algorithms
+
+It was tested and verified to work in Firefox, Chromium, and the W3C SVG validator.
+
+
+\item We also intend to create a wrapper web page to make the simulation easier to use, by letting users zoom into, pan, play, pause, and seek into the animation. We may also include other features like showing/hiding types of map elements.
+
 
 Remaining tasks:
 \begin{itemize}
-\item Complete the simulation and visualization software. We have yet to incorporate the output of the Matlab scripts (that is, the routings optimized according to the various algorithms); currently that is faked with randomly-generated data.
-\item We also intend to create a wrapper web page to make the simulation easier to use, by letting users zoom into, pan, play, pause, and seek into the animation. We may also include other features like showing/hiding types of map elements.
 \item Consider what variations in the algorithms and model are worth exploring.
 \item Use the software to explore variations in the algorithms, and their performance under variations of the model.
 \end{itemize}
 
 \subsubsection{Measure of success}
 A successful result will consist of simulation and visualization software that can evaluate the performance of routing algorithms, under conditions defined by actual data on data center placement, renewable power output over time and location, workload over time, etc.. The software will help develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
+
+
 
 \section{Setup}
 We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
