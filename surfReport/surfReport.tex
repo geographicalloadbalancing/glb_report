@@ -113,15 +113,15 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 
 \subsection{Previous work}
 	\subsubsection{Geographical load balancing}
-		Geographical load balancing provides goody gooder stuff.
 		Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
 		\paragraph{Can use almost entirely renewables}
 			Previous research suggests that the data center can even operate almost entirely on renewable energy under the geographical load balancing (GLB) model \cite{adam:GLB}. 
 		\paragraph{Convex optimization framework; solve numerically}
+			Our simulation models the whole data center routing system, using real-world data on wind and solar power output, grid electricity prices, and Internet request volume over time at various locations (the 48 contiguous U.S. states and 10 data center locations). The simulation is implemented as a convex optimization problem, solved numerically, whose solution is an allocation of requests to data centers.
 
 
 \subsection{Visualization}
-Our optimization models the whole data center routing system, using real-world data on wind and solar power output, grid electricity prices, and Internet request volume over time at various locations (the 48 contiguous U.S. states and 10 data center locations). We implement a comprehensible visualization of the multi-dimensional simulation input and output data. The visualization makes it easier to see what each optimization algorithm is doing. This software can be used to test effectiveness of and refine routing algorithms, thus helping develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
+We implement a comprehensible visualization of the multi-dimensional simulation input and output data. The visualization makes it easier to see what each optimization algorithm is doing, so can be used to test effectiveness of and refine routing algorithms. This will help develop the end goal of an implementable algorithm / system for routing Internet requests that allows data centers to operate using almost exclusively renewable energy.
 
 \subsection{Cooling-aware GLB}
 
