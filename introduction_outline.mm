@@ -21,11 +21,14 @@
 </node>
 <node CREATED="1349046583417" ID="ID_708927763" MODIFIED="1349046588506" POSITION="right" TEXT="This paper">
 <node CREATED="1349046615296" ID="ID_884262881" MODIFIED="1349046898858" TEXT="Extend model to also consider cooling cost">
-<node CREATED="1349046745214" ID="ID_483433497" MODIFIED="1349046759799" TEXT="Exploit diversity in cooling costs across regions"/>
+<node CREATED="1349046745214" ID="ID_483433497" MODIFIED="1349046759799" TEXT="Exploit diversity in cooling costs across regions">
+<node CREATED="1349054873464" ID="ID_510032436" MODIFIED="1349054880367" TEXT="temperature, humidity, etc."/>
+</node>
 <node CREATED="1349046815566" ID="ID_558891537" MODIFIED="1349046838252" TEXT="Reduces total cost and increases green energy usage"/>
 </node>
-<node CREATED="1349046870790" ID="ID_1249241819" MODIFIED="1349046876656" TEXT="Uses real data blah"/>
-<node CREATED="1349046686244" ID="ID_1581377221" MODIFIED="1349046689017" TEXT="Visualization"/>
+<node CREATED="1349046686244" ID="ID_1581377221" MODIFIED="1349046689017" TEXT="Visualization">
+<node CREATED="1349046870790" ID="ID_1249241819" MODIFIED="1349054106277" TEXT="Uses real data blah"/>
+</node>
 </node>
 </node>
 </map>
