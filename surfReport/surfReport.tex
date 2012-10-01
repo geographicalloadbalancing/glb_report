@@ -28,6 +28,8 @@
 
 \documentclass{acm_proc_article-sp}
 
+\newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
+
 \begin{document}
 
 \title{Renewable and Cooling Aware Geographical Load Balancing\titlenote{This research is supported by the NSF, Mr. David C. Elliot's family, and the Rose Hills Foundation.}}
@@ -242,17 +244,17 @@ Each data center has only limited number of servers; it cannot process requests 
 \item
 Each data center also has limited energy storage capacity; it cannot store any amount of energy more than that cap.
 \end{enumerate}
-\subsubsection{CO2 emission}
-Though the optimization is completely based on firm's interest of cost saving, we still want to monitor the amount of CO2 emission as a worth-noting side-effect. The CO2 emission arises from the grid electricity usage. The CO2 emission rate per kW/h varies across different states as each state has different energy source composition. An estimation of the rate can be found at \cite{carbon}.
+\subsubsection{\carbondioxide{} emission}
+Though the optimization is completely based on firm's interest of cost saving, we still want to monitor the amount of \carbondioxide{} emission as a worth-noting side-effect. The \carbondioxide{} emission arises from the grid electricity usage. The \carbondioxide{} emission rate per kW/h varies across different states as each state has different energy source composition. An estimation of the rate can be found at \cite{carbon}.
 
-Let $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total CO2 emission is then
+Let $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total \carbondioxide{} emission is then
 $$\sum_{i \in \mathcal{N}} \eta_i(x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
 \subsubsection{Benchmarks for comparison}
 Our model is the first to integrate practical cooling concerns into geographical load balancing. To show the impact of such consideration, we will compare the result of our model (Cooling-aware GLB) to the old GLB model which doesn't take cooling in the optimization (Cooling-Oblivious GLB) and the model which simply routes all requests to the nearest data centers (LOCAL). For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
 
 Meanwhile, we want to compare the performance of our model to one of its alternative, the storage model. The storage capacity is quantified in terms of the time period that the data center can operate entirely on storage at maximum load (excluding cooling requirement). We assume that the storage incurs no running cost. We choose the data center systems with 3-hour-storage and 6-hour-storage respectively as the benchmark.
 
-We will evaluate the results based on 1) the total cost; 2) the grid (brown) energy usage; 3) the $CO_2@@@@@$ emission.
+We will evaluate the results based on 1) the total cost; 2) the grid (brown) energy usage; 3) the \carbondioxide{} emission.
 
 
 \begin{figure*}
@@ -314,7 +316,7 @@ We are interested in whether the Cooling-aware GLB model works under all weather
 
 
 
-\subsection{Environmental impact - CO2 savings}
+\subsection{Environmental impact - \carbondioxide{} savings}
 
 
 \begin{figure}
@@ -326,7 +328,7 @@ We are interested in whether the Cooling-aware GLB model works under all weather
 
 The geographical load balancing method model benefits from routing requests to where energy price is low. When the data centers have on-site renewable energy plant as in our setting, renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has an desirable side-effect: reducing carbon emission.
 
-We can quantify the amount of CO2 emission via multiplying the grid energy usage of each data center location by the CO2 emission per energy unit. Figure 4 shows the CO2 emission comparison of each model in summer. By using the Cooling-aware GLB model, the aggregate carbon emission can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, the carbon emission of Cooling-aware GLB is even less than half of that of Cooling-oblivious GLB.
+We can quantify the amount of \carbondioxide{} emission via multiplying the grid energy usage of each data center location by the \carbondioxide{} emission per energy unit. Figure 4 shows the \carbondioxide{} emission comparison of each model in summer. By using the Cooling-aware GLB model, the aggregate carbon emission can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, the carbon emission of Cooling-aware GLB is even less than half of that of Cooling-oblivious GLB.
 
 The environmental impact of our new model is significant. This result is achieved even when we do not include the benefit of reducing carbon emission in the model. If the firm is given incentives for being environmental friendly, we believe the new model will certainly have more advantage in the cost-saving aspect.
 
