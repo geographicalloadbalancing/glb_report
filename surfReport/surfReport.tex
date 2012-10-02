@@ -29,6 +29,7 @@
 \documentclass{acm_proc_article-sp}
 
 \newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
+\newcommand{\eqdef}{\ensuremath{\overset{\mathrm{def}}{=}}}
 
 \begin{document}
 
@@ -175,6 +176,12 @@ On the other hand, the energy consumption of chilled-water cooling is empiricall
 c_c(x) = \gamma x
 \end{equation}
 %Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
+
+For notational convenience, define
+\begin{equation}
+	x^+ \eqdef \min(0, x)
+\end{equation}
+to be $x$ clamped to be positive.
 
 The optimal cooling portfolio is
 \begin{equation}
