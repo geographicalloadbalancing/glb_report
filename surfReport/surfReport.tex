@@ -162,20 +162,20 @@ The optimization will determine the routing plan $\lambda_{ij}(t)$ and the numbe
 
 \subsubsection{Delay cost}
 The delay cost represents the revenue loss incurred due to delay in processing requests. It comprises the propagation delay $d_{ij}$ from source $j$ to date center $i$ and the queuing delay at $i$.
-The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of $200 \frac{\mathrm{km}}{\mathrm{ms}}$ plus a constant term $5 \mathrm{ms}$. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1(ms)^{-1}$}.
+The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of $200 \frac{\mathrm{km}}{\mathrm{ms}}$ plus a constant term $5 \mathrm{ms}$. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 / \mathrm{ms}$}.
 
 \subsubsection{Cooling optimization}
 The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}\textrm{C}$. A typical data center uses both air cooling and chilled-water cooling. Let $x = x_a + x_c$ be the total number of active servers, $x_a$ the number of those that are air-cooled, and $x_c$ the number cooled with chilled water. This model finds the best division between $x_a$ and $x_c$.
 
 The energy consumption of air cooling is
 \begin{equation}
-c_a(x) = kx^3, 0 \leq x \leq \bar{x}, k > 0
+c_a(x) = k \cdot x^3, 0 \leq x \leq \bar{x}, k > 0
 \end{equation}
 The parameter $k$ is proportional to the temperature gradient between the inside and outside air. The parameter $\bar{x}$ corresponds to the maximum number of the servers that can be cooled by air cooling alone. The cap $\bar{x}$ is proportional to both the temperature gradient and the maximum air flow rate. In our simulation, the air flow rate is set such that when the outside temperature is $20^{\circ}\mathrm{C}$ lower than $T$, the data center can rely on air cooling entirely at full workload.
 
 On the other hand, the energy consumption of chilled-water cooling is empirically roughly linear in the IT demand empirically, so we model it as
 \begin{equation}
-c_c(x) = \gamma x
+c_c(x) = \gamma \cdot x
 \end{equation}
 %Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
 
@@ -187,15 +187,15 @@ to be $x$ clamped to be positive.
 
 The optimal cooling portfolio is
 \begin{equation}
-c(x) = \min_{x_c \in [0,x]} \gamma(x-x_c)^+ + kx_2^3
+c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_c)^+ + kx_2^3
 \end{equation}
 which yields
 $$
 c(x) = \left\{ \begin{array}{ll}
-	kx^3 & \mbox{if $x \geq x_s$}\\
-	kx_s^3 + \gamma (x-x_s) & \mbox{otherwise}\end{array} \right.
+	k \cdot x^3 & \mbox{if $x \geq x_s$}\\
+	k \cdot x_s^3 + \gamma \cdot (x-x_s) & \mbox{otherwise}\end{array} \right.
 $$
-where $x_s = \min \left\{\sqrt{\gamma/3k}, \bar{x}\right\}$ is the threshold when chiller cooling is necessary.
+where $x_s = \min \left(\sqrt{\gamma/3k}, \bar{x}\right)$ is the threshold for when chiller cooling is necessary.
 
 To explore the effect of seasonality on the performance of the cooling model, we use two sets of temperature data. One is taken from the first week of January 2012 from \cite{temp}; the other is take from the first week of July 2012. The measurements are taken hourly.
 
@@ -213,35 +213,35 @@ where $p_i$ is the price of electricity; $x_i(t)$ is the number of active server
 
 \subsubsection{Switching cost}
 The switching cost models the delay and wear-and-tear cost when switching on/off servers. In our model, the workload at each data center is updated every 10 minutes. To avoid excessively-frequent switching of server status, we define the switching cost to be
-$$\beta(x_i(t+1) - x_i(t))^+$$
+$$\beta \cdot (x_i(t+1) - x_i(t))^+$$
 where $\beta$ is the weight of switching cost. In our simulation, $\beta = 6$.
 
 \subsubsection{Storage}
 In addition to renewable-energy generators, data centers may also install energy storage (in the form of batteries, supercapacitors, flywheels, etc.). Renewable-energy availability varies greatly over time; introducing storage smooths out the supply.
 
 We model the amount of electricity storage at time $t$ to be $0 \leq es_i(t) \leq ES_i$, where $ES_i$ is the maximum storage capacity. Let the storage rate be
-$$e_i(t) = \rho (es_i(t) - es_i(t+1))$$
+$$e_i(t) = \rho \cdot (es_i(t) - es_i(t+1))$$
 Positive $e_i(t)$ means discharging, negative charging. The parameter $\rho$ represents the charging and discharging efficiency. In our simulation we assume perfect efficiency, i.e. $\rho = 1$.
 
 In the presence of storage, the energy cost is
 \begin{equation}
-p_i(l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
+p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
 \end{equation}
 
 \subsubsection{Total cost}
 Now we can formally write our optimization problem as:
 \begin{align*}
-\min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i(l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
+\min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
 & + \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}}
 \lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) \\
-& + \beta(x_i(t+1) - x_i(t))^+
+& + \beta \cdot (x_i(t+1) - x_i(t))^+
 \end{align*}
 subject to
 \begin{align*}
 & \sum_{i\in \mathcal{N}}\lambda_{ij}(t) = L_j(t), &\forall j\in J \\
 & \lambda_{ij} \geq 0, & \forall i\in N, j\in J \\
 & 0 \leq x_i(t) \leq X_i, & \forall i \in N \\
-& \lambda_i(t) \leq x_i(t)\mu_i & \forall i \in N \\
+& \lambda_i(t) \leq x_i(t) \cdot \mu_i & \forall i \in N \\
 & 0 \leq es_i(t) \leq ES_i & \forall i \in N \\
 & e_i(t) = es_i(t) - es_i(t+1) & \forall i \in N
 \end{align*}
@@ -259,7 +259,7 @@ Each data center's energy storage capacity is bounded between $0$ and a fixed ca
 The optimization thus far has the sole objective of minimizing the cost to the firm. But we also want to monitor the amount of \carbondioxide{} emitted as an externality. The emission of \carbondioxide{} arises from grid electricity use; the emissions rate per kW$\cdot{}$h varies across states, as each state has a different energy-source composition. An estimation of these rates can be found at \cite{carbon}.
 
 Let $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total \carbondioxide{} emission is then
-$$\sum_{i \in \mathcal{N}} \eta_i(x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
+$$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
 \subsubsection{Benchmarks for comparison}
 Our model is the first to integrate practical cooling concerns into geographical load balancing. To show their impact, we will compare the result of our model (Cooling-aware GLB) to the previous Cooling-Oblivious GLB model and the model which simply routes all requests to the nearest data centers (LOCAL). For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
 
