@@ -107,11 +107,20 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 
 \end{frame}
 
+\begin{frame}
+\begin{block}{Test}
+meow
+\begin{block}{Test2}
+Hello
+\end{block}
+\end{block}
+\end{frame}
+
 \section{Introduction}
 
 
 \subsection{The problem}
-	\subsubsection{Energy cost is important for DCs.}
+	\begin{block}{Energy cost is important for DCs.}
 		Building cost-saving and environmentally-friendly data centers has become a pressing challenge for the ICT industry.
 		Energy consumption accounts for much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage concerns society at large.
 		As the need for data centers grows rapidly,
@@ -124,18 +133,22 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 		Cooling also uses energy:
 		
 			The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost
-	\subsubsection{Need for load balancing between DCs}
+	
+	\end{block}
+	\begin{block}{Need for load balancing between DCs}
 		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency—without considering energy efficiency.
-	\subsubsection{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
+	\end{block}
+	\begin{block}{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
 		Renewable vs. grid energy:
 		
 			Currently, data centers are powered mainly by buying electricity off the grid. Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.
 			
 			However, some data centers are already partly operated on green energy. Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demand, so excess demand must be satisfied by buying electricity off the grid.
+	\end{block}
 
 
 \subsection{Previous work}
-	\subsubsection{Geographical load balancing}
+	\begin{block}{Geographical load balancing}
 		Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
 		
 		Can use almost entirely renewables
@@ -145,6 +158,7 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 		Convex optimization framework; solve numerically
 		
 			Our simulation models the whole data center routing system, using real-world data on wind and solar power output, grid electricity prices, and internet request volume over time at various locations (the 48 contiguous U.S. states and 10 data center locations). The simulation is implemented as a convex optimization problem, solved numerically, whose solution is an allocation of requests to data centers.
+	\end{block}
 
 
 \subsection{Visualization}
@@ -185,11 +199,12 @@ The internet-scale system consists of a set $\mathcal{N}$ of 10 data centers at 
 
 The optimization will determine the routing plan $\lambda_{ij}(t)$ and the number of active servers $x_i(t)$ that minimizes the total cost (the sum of delay cost, energy cost, and switching cost).
 
-\subsubsection{Delay cost}
+\begin{block}{Delay cost}
 The delay cost represents the revenue loss incurred due to delay in processing requests. It comprises the propagation delay $d_{ij}$ from source $j$ to date center $i$ and the queuing delay at $i$.
 The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of $200 \frac{\mathrm{km}}{\mathrm{ms}}$ plus a constant term $5 \mathrm{ms}$. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 / \mathrm{ms}$}.
+\end{block}
 
-\subsubsection{Cooling optimization}
+\begin{block}{Cooling optimization}
 The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}\textrm{C}$. A typical data center uses both air cooling and chilled-water cooling. Let $x = x_a + x_c$ be the total number of active servers, $x_a$ the number of those that are air-cooled, and $x_c$ the number cooled with chilled water. This model finds the best division between $x_a$ and $x_c$.
 
 The energy consumption of air cooling is
@@ -229,19 +244,25 @@ To explore the effect of seasonality on the performance of the cooling model, we
 \epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
 \caption{Screenshot of the visualization, running in the Chromium web browser.}
 \end{figure}
-\subsubsection{Energy cost}
+
+\end{block}
+
+
+\begin{block}{Energy cost}
 The energy cost is the cost of both running active servers and keeping them at constant working temperature. The data centers pay no cost for renewable energy; we assume that each data center has dedicated renewable energy generation facilities that incurs zero maintenance cost. Thus the energy cost is for using energy from the grid and can be represented as
 \begin{equation}
 p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t))^+
 \end{equation}
 where $p_i$ is the price of electricity; $x_i(t)$ is the number of active servers at that time interval $t$; $l(x_i(t))$ is energy consumption of active servers themselves in the time interval, or IT demand; $c(x_i(t))$ is the energy usage for cooling; and $r_i(t)$ is the renewable energy availability. In our model, $p_i$ is set to be constant according to the real statistics of each state; $l$ is a linear function of $x(t)$.
+\end{block}
 
-\subsubsection{Switching cost}
+\begin{block}{Switching cost}
 The switching cost models the delay and wear-and-tear cost when switching on/off servers. In our model, the workload at each data center is updated every 10 minutes. To avoid excessively-frequent switching of server status, we define the switching cost to be
 $$\beta \cdot (x_i(t+1) - x_i(t))^+$$
 where $\beta$ is the weight of switching cost. In our simulation, $\beta = 6$.
+\end{block}
 
-\subsubsection{Storage}
+\begin{block}{Storage}
 In addition to renewable-energy generators, data centers may also install energy storage (in the form of batteries, supercapacitors, flywheels, etc.). Renewable-energy availability varies greatly over time; introducing storage smooths out the supply.
 
 We model the amount of electricity storage at time $t$ to be $0 \leq es_i(t) \leq ES_i$, where $ES_i$ is the maximum storage capacity. Let the storage rate be
@@ -252,8 +273,9 @@ In the presence of storage, the energy cost is
 \begin{equation}
 p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
 \end{equation}
+\end{block}
 
-\subsubsection{Total cost}
+\begin{block}{Total cost}
 Now we can formally write our optimization problem as:
 \begin{align*}
 \min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
@@ -280,12 +302,16 @@ Each data center has a limited number of servers; it cannot process requests in 
 \item
 Each data center's energy storage capacity is bounded between $0$ and a fixed cap.
 \end{enumerate}
-\subsubsection{\carbondioxide{} emission}
+\end{block}
+
+\begin{block}{\carbondioxide{} emission}
 The optimization thus far has the sole objective of minimizing the cost to the firm. But we also want to monitor the amount of \carbondioxide{} emitted as an externality. The emission of \carbondioxide{} arises from grid electricity use; the emissions rate per kW$\cdot{}$h varies across states, as each state has a different energy-source composition. An estimation of these rates can be found at \cite{carbon}.
 
 Let $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total \carbondioxide{} emission is then
 $$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
-\subsubsection{Benchmarks for comparison}
+\end{block}
+
+\begin{block}{Benchmarks for comparison}
 Our model is the first to integrate practical cooling concerns into geographical load balancing. To show their impact, we will compare the result of our model (Cooling-aware GLB) to the previous Cooling-Oblivious GLB model and the model which simply routes all requests to the nearest data centers (LOCAL). For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
 
 Separately, we compare the performance of our model to the storage model. Storage capacity is quantified as the duration that a data center could operate at maximum load entirely off stored energy (excluding energy usage for cooling). We assume that storage incurs no running cost. We choose data-center systems with 3-hour and 6-hour storage respectively as the benchmark.
@@ -297,6 +323,9 @@ We will evaluate the outcomes based on 1) the total cost; 2) the grid (brown) en
 \epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
 \caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
 \end{figure}
+\end{block}
+
+
 \section{Visualization}
 Our numerical experiment generates time series describing routing plans and data center activity. Due to the large quantity of data, the output is hard to interpret when in matrix form. Therefore we developed a visualization tool to help us recognize the key characteristics of the optimal solution quickly. It also works as a simple check for the validity of the solution: we can spot obviously abnormal behaviors in the output.
 
