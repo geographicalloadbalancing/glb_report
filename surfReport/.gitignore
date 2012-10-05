@@ -3,4 +3,9 @@
 *.blg
 *.dvi
 *.log
+*.out
+*.nav
+*.snm
+*.toc
 surfReport.pdf
+presentation.pdf
