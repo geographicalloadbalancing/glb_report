@@ -1,6 +1,8 @@
-\documentclass{beamer}
+\documentclass[xcolor=dvipsnames]{beamer}
 
 \usepackage[utf8]{inputenc}
+\definecolor{dgreen}{rgb}{0.,0.6,0.}
+\definecolor{gold}{rgb}{1.,0.84,0.}
 
 \usepackage{epsfig}
 \usepackage{amssymb}
@@ -9,23 +11,27 @@
 
 
 
-\title{Cooling-aware Geographical Load Balancing Visualized}
-\subtitle{This research is supported by the NSF, Mr. David C. Elliot's family, and the Rose Hills Foundation.}
-\author[Author, Anders] % (optional, for multiple authors)
-{F.~Author\inst{1} \and S.~Anders\inst{2}}
-\institute[Universitäten Hier und Dort] % (optional)
+\title{Cooling-Aware Geographical Load Balancing Visualized}
+
+\subtitle{Research supported by NSF, Elliot Family, and Rose Hills Foundation}
+
+\author[Hirshleifer, Wang, Liu, Wierman] % (optional, for multiple authors)
+{Michael~Hirshleifer\inst{} \and Yizhen~Wang\inst{} \\ \and Zhenhua~Liu \inst{} \and Adam~ Wierman \inst{}}
+\institute[Caltech] % (optional)
 {
-  \inst{1}%
-  Institut für Informatik\\
-  Universität Hier
-  \and
-  \inst{2}%
-  Institut für theoretische Philosophie\\
-  Universität Dort
+  \inst{}%
+  California Institute of Technology \\
+  1200 E California Blvd \\
+   Pasadena, CA 91106 \\
+ % \and
+ % \inst{2}%
+  %Institut für theoretische Philosophie\\
+  %Universität Dort
 }
-\date[KPT 2004] % (optional)
-{Konferenz über Präsentationstechniken, 2004}
-\subject{Informatik}
+\date[Support] % (optional)
+{Caltech SURF Presentation, October 2012 }
+%\subject{Informatik}
+
 
 % TOC at start of each section
 \AtBeginSection[]
@@ -95,142 +101,209 @@
 \tableofcontents[part=1,pausesections]
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Summary}
 
-\begin{abstract}
-We explore how geographical load balancing can improve the efficiency of renewable energy use in data centers.
-The model incorporates varying cooling efficiency (considering weather conditions) and electricity prices over time at each data center.
-We run a convex optimization using as input real workload, temperature, solar, and wind traces.
-We find that using geographical load balancing lets data centers more effectively use locally available renewable energy, thereby substantially reducing their usage of grid electricity. This conclusion holds across seasons.
-We develop a visualization that displays the demand from each of the 48 contiguous U.S. states and the energy usage, grid energy usage, and renewable energy generation at each of 10 data centers, animated over time according to the input data and the optimization output. The resulting software can be used to test effectiveness of and refine routing algorithms.
-\end{abstract}
+	\begin{block}{Research Goal}  
+	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficiency use of renewable energy.  
+	\end{block}
+	
+	\begin{block}{Issue} 
+	Minimize DC electricity cost over time by convex optimization over real workload inputs - temp, solar, \& wind traces.
+	\end{block}
 
-\end{frame}
+	\begin{block}{Our Contributions} 
+	\begin{itemize}
+		\item{Cooling-aware GLB model \\
+			DCs use locally available renewable energy more effectively \\
+			Reduce electricity grid usage, even across seasons \\
+			Potentially use renewables almost exclusively} 
+		\item{Visualization \\ 
+		Animation of 10 DCs demand \& energy usage (grid \& renewable energy generation) in 48 contiguous U.S. states}  
+		\item{Test effectiveness of, and refine, routing algorithms using visualization}
+	\end{itemize} 
+	\end{block}
 
-\begin{frame}
-\begin{block}{Test}
-meow
-\begin{block}{Test2}
-Hello
-\end{block}
-\end{block}
 \end{frame}
 
 \section{Introduction}
 
+\begin{frame}{Background}
 
-\begin{frame}{The problem}
-	\begin{block}{Energy cost is important for DCs.}
-		Building cost-saving and environmentally-friendly data centers has become a pressing challenge for the ICT industry.
-		Energy consumption accounts for much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage concerns society at large.
-		As the need for data centers grows rapidly,
-		“Green” routing algorithms would benefit internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, as data centers are expected to use several percent of U.S. and world electricity output, and they currently use mostly non-renewable energy.
-		
-		Servers use energy to process requests:
-		
-			Data centers require a substantial amount of energy, varying with load (requests processed per second).
-			
-		Cooling also uses energy:
-		
-			The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost
-	
+	\begin{block}{Strong need for “green” routing algorithms to reduce electricity costs and pollution} 
+		Many, high growth in DC; DC energy usage major source of operating costs; DCs consume high fraction of US/world non-green energy production; Major polluter.
 	\end{block}
-	\begin{block}{Need for load balancing between DCs}
-		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency—without considering energy efficiency.
+
+	\begin{block}{DC servers energy use} \vspace{-1mm}
+		\begin{itemize}
+		          \item{To operate and \textbf{cool} (previously ignored in literature)}
+			\item{Substantial and variable (especially for cooling in summer). \\ %\cite{datacenter} 
+				\begin{itemize} \item{Exploit geog.heterogeneity of DC cooling costs.) } \end{itemize}
+				}
+			\item{Some DCs partly operated on green energy (solar, wind); Problem - green energy highly variable 
+				\begin{itemize} \item{Time of day, cloud cover, wind speed.}
+					               \item{Does not match user demand. }
+				\end{itemize} }
+			\item{Prohibitively expensive to store green energy.}
+			\item{Need to buy off of grid, increase pollution.}
+		\end{itemize}
 	\end{block}
-	\begin{block}{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
-		Renewable vs. grid energy:
-		
-			Currently, data centers are powered mainly by buying electricity off the grid. Grid electricity necessarily comes substantially from burning fossil fuels, because with current technology, storing renewable energy over time to match demand is prohibitively expensive.
-			
-			However, some data centers are already partly operated on green energy. Data centers may have dedicated renewable energy generation (solar or wind farms). But the renewable power output at each location varies over time (time of day, cloud cover, wind speed), and generally does not match user demand, so excess demand must be satisfied by buying electricity off the grid.
-	\end{block}
+
 \end{frame}
 
-\begin{frame}{Previous work}
-	\begin{block}{Geographical load balancing}
-		Flexibility in routing could allow a network of data centers to run almost entirely off renewable energy. When routing a request, there is a trade-off: instead of always choosing the nearest data center, a request can be routed to a data center where renewable energy is currently being produced (reducing electricity costs), at the expense of somewhat higher latency. Professor Wierman’s group have devised optimal or near-optimal (given a functional form for the business cost of increased latency) routing algorithms for efficient geographical load balancing.
-		
-		Can use almost entirely renewables
-		
-			Previous research suggests that under the geographical load balancing (GLB) model, the system of data centers can even operate almost entirely on renewable energy, without undue increase in latency \cite{adam:GLB}.
-		
-		Convex optimization framework; solve numerically
-		
-			Our simulation models the whole data center routing system, using real-world data on wind and solar power output, grid electricity prices, and internet request volume over time at various locations (the 48 contiguous U.S. states and 10 data center locations). The simulation is implemented as a convex optimization problem, solved numerically, whose solution is an allocation of requests to data centers.
+\begin{frame}{Previous GLB models}
+
+	\begin{block}{Old models}
+		Solve DC redundancy by geographical routing to minimize latency; Ignore energy efficiency.
 	\end{block}
+
+	\begin{block}{Wierman group's green GLB model, Liu et al 2011 } % \cite{adam:GLB}
+		\begin{itemize}
+			\item{Tradeoffs min. latency from geographical distance and min. electricity costs using green sources.}
+			\item{Optimal or near-optimal  routing algorithms for efficient GLB (given functional form for cost of increased latency).}
+			\item{Can power DC networks almost entirely off renewable energy without undue increase in latency} 
+		\end{itemize}
+	\end{block}  	
 \end{frame}
 
-\begin{frame}{Visualization}
-We implement a comprehensible visualization of the multi-dimensional simulation input and output data. The visualization makes it easier to see what each optimization algorithm is doing, so it can be used to test effectiveness of and refine routing algorithms. This will help develop the end goal of an implementable algorithm / system for routing internet requests that allows data centers to operate using almost exclusively renewable energy.
+\begin{frame}{Cooling-aware geographical load balancing model}
+
+%	\begin{block}{Contributions}
+		\begin{itemize}
+			\item{Consider cooling costs.} 
+			\item{Solution achieves significantly lower total energy cost \& lower \carbondioxide{} emission.}
+			\item{Evaluate economic, environmental impact.}
+			\item{Use actual data center workload, weather, renewable energy (wind, solar) availability and grid electricity prices to numerically compute the optimal solution.}
+			\item{10 Data Center locations in 48 contiguous U.S. states.} 
+			\item{Implement visualization of simulation solution \\
+				Advantages: 
+				\begin{enumerate}
+					\item{Easier to see what each optimization algorithm is doing.}
+					\item{Can test effectiveness of, and refine, routing algorithms.} 
+					\item{Facilitate development of an implementable algorithm.}
+				\end{enumerate}
+				}			
+		\end{itemize}
+%	\end{block}
 \end{frame}
 
-\begin{frame}{Cooling-aware GLB}
-This paper shows that a new geographical load balancing model which considers energy cost in cooling is able to reduce the total cost significantly compared to previous models. This improvement in green energy usage leads to much lower carbon emissions.
+\begin{frame}{Cooling-aware GLB model results}
 
-We set up an experiment to investigate the economic and environmental impact of our new model. We use real traces of data center workload, renewable energy availability, and weather to numerically compute the optimal solution.% The cost model of the geographical load balancing system is analytically determined@@@@[what that mean lah].
-
-Our study leads to three major findings.
-
-First, the new GLB model, the Cooling-aware GLB model, reduces the total cost of the system. This is because it is able to distribute the request to locations with not only cheap energy, but also favorable weather for cooling. More excitingly, the optimal cost does not vary much with seasonality. This can potentially solve the problem of data center cooling in places with climate and weather extremes (like strong diurnal temperature variation).
-
-Second, the Cooling-aware GLB model can allow significantly reduced carbon emissions, halved compared to the previous models. The new GLB model makes better-informed decisions than the previous GLB model by considering the energy for cooling.
-
-Third, considering cooling yields a larger benefit than adding energy storage, both in total cost and in carbon emissions, provided that the aggregate renewable supply is enough to power the data centers yet not in vast surplus. We obtain this result by systematically comparing the Cooling-aware GLB system with storage systems of various storage capacities. We conclude that Cooling-aware GLB has a clear advantage over the storage model when the renewable energy generation and storage facilities are not widely established; it requires much less investment in infrastructure and hence can be implemented more easily.
+	\begin{block}{Low variation in optimized cost despite volatile wind, sun.}
+		\begin{itemize} 
+			\item{Solution reduces total system cost by distributing requests to locations with cheap energy, favorable weather for cooling.}
+			\item{Addresses DC cooling in locations with extreme climate or weather (diurnal temp. variation).}
+		\end{itemize}
+	\end{block}
+	\vspace{-3mm}
+	\begin{block}{Reduction in \carbondioxide{}, halved}
+	\end{block}
+	\vspace{-3mm}
+	\begin{block}{More comprehensive treatment of energy costs sources - cooling; better-informed decisions.}
+	\end{block}
+	\vspace{-3mm}
+	\begin{block}{Considering cooling superior to adding non-green storage to model lowers total cost and carbon emissions.}
+	\end{block}
+	\vspace{-3mm}
+	\begin{block}{Lower infrastructure investment, easier to implement }
+	\end{block}
 \end{frame}
 
 \section{Setup}
-We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
 
-\begin{frame}{The workload}
-Let $J$ be the set of sources of requests. Each of 48 U.S. states is modeled as having a source of web requests located at its geographical center. The request volume is $L_j(t)$, the mean arrival rate from source $j \in J$ at time interval $t$. $L_j(t)$ is estimated using real-world traces. The base trend of the workload is taken from a trace at Hewlett-Packard Labs, then the workload of each request source is scaled proportionately to the population of the state, following by a shift along the time dimension according to the timezone.
-\end{frame}
+\begin{frame}{Model Setup}
 
-\begin{frame}{The availability of renewable energy}
-We have three major considerations when modeling the availability of renewable energy:
+Each DC has a cooling system. % (\cite{adam:cooling}). 
+Modify Liu et al.'s (2011) %\cite{adam:GLB}% 
+model to include cooling costs. Use convex optimization to solve model as in Liu et al. (2011b). %\cite{adam:GLBfull}.
 
-First, the weather at the data centers is crucial, as it determines the renewable energy output. We use real traces of wind speed and insolation obtained from \cite{renew1} \cite{renew2}.
-%@@@@@@[Is this true? I thought the traces were (calculated) power output.]
-The measurements have a granularity of 10 minutes. The rate of renewable energy generation per plant unit at each data center is then set to be proportional to the weather data respectively.
+	\begin{block}{Workload}
 
-Second, the size of the renewable energy plant matters. We scale the renewable generation capacity such that the total renewable energy is $c$ times as much as the total energy demand to process all requests. In our simulation, $c$ varies in $[0.5, 4]$ with a step length of $0.5$.
+	Web of source requests assumed at geog. centers in 48 U.S. states. 
 
-Third, we must choose an optimal mix of solar and wind energy to power the data centers. Previous research \cite{adam:GLB} suggests that a mix of 80\% of wind and 20\% of solar fits the data center energy consumption characteristics nicely. We adopt this ratio in our simulation throughout.
-%%%%%%%%%%%%%%%%%%%%
+	$L_j(t)$, mean request arrival rate from source $j$ at interval $t$ from real-world traces.
+
+	Workload base trend from trace at H-P Labs.
+
+	Scale workload of each request source by state population. 
+
+	\end{block}
+
+	\begin{block}{Renewable energy output} 
+
+            Use 10min interval real wind speed \& insolation traces from http://wind.nrel.gov/.  %\cite{renew1} \cite{renew2}. 
+	%@@@@@@[Is this true? I thought the traces were (calculated) power output.] 
+
+	\vspace{1mm}
+           DC renewable energy generation rate per plant $\propto$   Weather data.
+
+	Total renewable energy =  $c$ $\times$ Total energy demand to process all requests, 	$c$ varies in $[0.5, 4]$ with a step length of $0.5$.
+
+	 Use a mix of 80\% of wind and 20\% following Liu et al. (2011). % \cite{adam:GLB}.
+	\end{block}
 \end{frame}
 
 \begin{frame}{The internet-scale system}
-The internet-scale system consists of a set $\mathcal{N}$ of 10 data centers at Google data center locations in California, Washington, Oregon, Illinois, Georgia, Virginia, Texas, Florida, North Carolina, and South Carolina. The number of servers (or equivalently, processing capacity) $X_i$ at data center $i$ is set to be twice the peak load at $i$ when all requests are routed to the nearest data centers.
 
-The optimization will determine the routing plan $\lambda_{ij}(t)$ and the number of active servers $x_i(t)$ that minimizes the total cost (the sum of delay cost, energy cost, and switching cost).
+Set $\mathcal{N}$ of 10 DCs at Google DCs in 10 states. \vspace{1mm}  %California, Washington, Oregon, Illinois, Georgia, Virginia, Texas, Florida, North Carolina, and South Carolina. 
+
+\#servers $X_i$ at DC $i$ = 2 $\times$ peak load at $i$  \vspace{1mm} 
+
+% ***** when all requests are routed to nearest DCs. ******
+
+Optimization: Choose routing plan $\lambda_{ij}(t)$ and \# active servers $x_i(t)$  to minimize total cost (= delay cost + energy cost + switching cost).
 
 \begin{block}{Delay cost}
-The delay cost represents the revenue loss incurred due to delay in processing requests. It comprises the propagation delay $d_{ij}$ from source $j$ to date center $i$ and the queuing delay at $i$.
-The propagation delay $d_{ij}$ is calculated to be the time needed to travel between $i$ and $j$ at transmission speed of $200 \frac{\mathrm{km}}{\mathrm{ms}}$ plus a constant term $5 \mathrm{ms}$. The queuing delay is calculated from the parallel M/G/1/Processor Sharing queue model in which the total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ is distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 / \mathrm{ms}$}.
+= Propagation delay $d_{ij}$ from source $j$ to DC$_i$  + queuing delay at $i$.
+
+$d_{ij}$ = travel time from $i$ to $j$ at transmission speed $200 \frac{\mathrm{km}}{\mathrm{ms}}$ + $5 \mathrm{ms}$. \vspace{1mm} 
+
+Queuing delay calculated from the parallel M/G/1/Processor.  \vspace{1mm} 
+
+Sharing queue model: Total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 / \mathrm{ms}$}.
+
 \end{block}
 
-\begin{block}{Cooling optimization}
-The cooling optimization model finds the minimum energy consumption required to maintain the data center at constant temperature $T = 25^{\circ}\textrm{C}$. A typical data center uses both air cooling and chilled-water cooling. Let $x = x_a + x_c$ be the total number of active servers, $x_a$ the number of those that are air-cooled, and $x_c$ the number cooled with chilled water. This model finds the best division between $x_a$ and $x_c$.
+\end{frame}
 
-The energy consumption of air cooling is
-\begin{equation}
-c_a(x) = k \cdot x^3, 0 \leq x \leq \bar{x}, k > 0
-\end{equation}
-The parameter $k$ is proportional to the temperature gradient between the inside and outside air. The parameter $\bar{x}$ corresponds to the maximum number of the servers that can be cooled by air cooling alone. The cap $\bar{x}$ is proportional to both the temperature gradient and the maximum air flow rate. In our simulation, the air flow rate is set such that when the outside temperature is $20^{\circ}\mathrm{C}$ lower than $T$, the data center can rely on air cooling entirely at full workload.
+\begin{frame}{Cooling-aware optimization}
 
-On the other hand, the energy consumption of chilled-water cooling is empirically roughly linear in the IT demand empirically, so we model it as
+	Minimize energy consumption to maintain DC at $T = 25^{\circ}\textrm{C}$. 
+
+	\#active servers $x = x_a + x_c$  where a=air-cooled, c=water chilled. \vspace{1mm} 
+
+	Find best division between $x_a$ and $x_c$.
+
+	\begin{block}{Air-cooling energy consumption} \vspace{-3mm}
+	\begin{equation}
+           c_a(x) = k \cdot x^3, 0 \leq x \leq \bar{x}, k > 0
+ 	\end{equation}
+
+ $k$ $\propto$ temperature gradient between the inside and outside air. 
+
+$\bar{x}$ = maximum \#servers cooled by air cooling alone. 
+
+$\bar{x}$ $\propto$ temperature gradient, maximum air flow rate. 
+
+\vspace{2mm}
+
+We set air flow rate to level that can air cool DC entirely at full workload when outside temperature is lower than   $T - 20^{\circ}\mathrm{C}$. 
+\end{block}
+\end{frame}
+
+\begin{frame}{Chilled-water cooling}
+
+Energy consumption roughly linear in IT demand empirically: 
 \begin{equation}
 c_c(x) = \gamma \cdot x
 \end{equation}
 %Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
-
-For notational convenience, define
+%For notational convenience, define
 \begin{equation}
 	x^+ \eqdef \min(0, x)
 \end{equation}
-to be $x$ clamped to be positive.
+% to be $x$ clamped to be positive.
 
-The optimal cooling portfolio is
+\begin{block}{Optimal cooling portfolio}
 \begin{equation}
 c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_c)^+ + kx_2^3
 \end{equation}
@@ -242,7 +315,13 @@ c(x) = \left\{ \begin{array}{ll}
 $$
 where $x_s = \min \left(\sqrt{\gamma/3k}, \bar{x}\right)$ is the threshold for when chiller cooling is necessary.
 
-To explore the effect of seasonality on the performance of the cooling model, we use two sets of temperature data. One is taken from the first week of January 2012 from \cite{temp}; the other is take from the first week of July 2012. The measurements are taken hourly.
+\end{block}
+\end{frame}
+
+%To explore seasonality on cooling model performance
+% Hourly temperature data from Week 1 January 2012 from \cite{temp} and Week 1 July 2012. 
+
+\begin{frame}{Data center visualization}
 
 \begin{figure}
 \centering
@@ -250,44 +329,63 @@ To explore the effect of seasonality on the performance of the cooling model, we
 \caption{Screenshot of the visualization, running in the Chromium web browser.}
 \end{figure}
 
-\end{block}
+\end{frame}
 
-
+\begin{frame}{}
 \begin{block}{Energy cost}
-The energy cost is the cost of both running active servers and keeping them at constant working temperature. The data centers pay no cost for renewable energy; we assume that each data center has dedicated renewable energy generation facilities that incurs zero maintenance cost. Thus the energy cost is for using energy from the grid and can be represented as
+Cost of running active servers + cost of maintaining constant working temperature. 
+
+Assume DC renewable energy cost is 0. 
+
+Grid energy cost: \vspace{-3mm}
 \begin{equation}
 p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t))^+
 \end{equation}
-where $p_i$ is the price of electricity; $x_i(t)$ is the number of active servers at that time interval $t$; $l(x_i(t))$ is energy consumption of active servers themselves in the time interval, or IT demand; $c(x_i(t))$ is the energy usage for cooling; and $r_i(t)$ is the renewable energy availability. In our model, $p_i$ is set to be constant according to the real statistics of each state; $l$ is a linear function of $x(t)$.
+$p_i$ = electricity price, 
+$x_i(t)$ = \#active servers in time interval $t$,
+
+$l(x_i(t))$ = linear function of energy consumption, %of active servers or IT demand in time interval 
+$c(x_i(t))$ = energy usage for cooling, $r_i(t)$ = renewable energy availability, 
+
+$p_i$  = constant real statistic for each state. 
 \end{block}
 
 \begin{block}{Switching cost}
-The switching cost models the delay and wear-and-tear cost when switching on/off servers. In our model, the workload at each data center is updated every 10 minutes. To avoid excessively-frequent switching of server status, we define the switching cost to be
+Delay, wear \& tear cost switching on/off servers. DC workload updated every 10 mins. Switching cost weight $\beta = 6$.
 $$\beta \cdot (x_i(t+1) - x_i(t))^+$$
-where $\beta$ is the weight of switching cost. In our simulation, $\beta = 6$.
 \end{block}
 
+\end{frame}
+
+\begin{frame}{}
+
 \begin{block}{Storage}
-In addition to renewable-energy generators, data centers may also install energy storage (in the form of batteries, supercapacitors, flywheels, etc.). Renewable-energy availability varies greatly over time; introducing storage smooths out the supply.
+DC can store energy (batteries, supercapacitors, flywheels).
 
-We model the amount of electricity storage at time $t$ to be $0 \leq es_i(t) \leq ES_i$, where $ES_i$ is the maximum storage capacity. Let the storage rate be
+Electricity storage at time $t$ is $0 \leq es_i(t) \leq ES_i$. 
+
+$ES_i$ = maximum storage capacity.  Storage rate is
 $$e_i(t) = \rho \cdot (es_i(t) - es_i(t+1))$$
-Positive $e_i(t)$ means discharging, negative charging. The parameter $\rho$ represents the charging and discharging efficiency. In our simulation we assume perfect efficiency, i.e. $\rho = 1$.
+Positive $e_i(t)$ means discharging, negative charging. 
 
-In the presence of storage, the energy cost is
+Assume $\rho = 1$, charging or discharging efficiency is perfect.
+
+Energy cost with storage is
 \begin{equation}
 p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
 \end{equation}
 \end{block}
+\end{frame}
 
-\begin{block}{Total cost}
-Now we can formally write our optimization problem as:
+\begin{frame}{Optimization problem - Minimize total costs}
+
 \begin{align*}
 \min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
 & + \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}}
 \lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) \\
 & + \beta \cdot (x_i(t+1) - x_i(t))^+
 \end{align*}
+\vspace{-2mm}
 subject to
 \begin{align*}
 & \sum_{i\in \mathcal{N}}\lambda_{ij}(t) = L_j(t), &\forall j\in J \\
@@ -298,68 +396,158 @@ subject to
 & e_i(t) = es_i(t) - es_i(t+1) & \forall i \in N
 \end{align*}
 
-The boundary conditions model the following real-world constraints:
-\begin{enumerate}
-\item
-The requests from a population center all have to be processed by the geographical load balancing system. Each data center should receive a non-negative amount of work.
-\item
-Each data center has a limited number of servers; it cannot process requests in excess of its computational capacity.
-\item
-Each data center's energy storage capacity is bounded between $0$ and a fixed cap.
-\end{enumerate}
-\end{block}
+\end{frame}
 
+\begin{frame}{}
+
+	\begin{block}{Boundary conditions model real-world constraints:}
+	\begin{enumerate}
+	\item
+	GLB system processes all requests. Each DC gets $>0$ work.
+	\item
+	Each DC has finite server capacity. %cannot process requests $>$ computational capacity; server capacity finite.
+	\item
+	Each DC's energy storage capacity bounded [$0$, fixed cap].
+	\end{enumerate}
+	\end{block}
+\vspace{-3mm}
 \begin{block}{\carbondioxide{} emission}
-The optimization thus far has the sole objective of minimizing the cost to the firm. But we also want to monitor the amount of \carbondioxide{} emitted as an externality. The emission of \carbondioxide{} arises from grid electricity use; the emissions rate per kW$\cdot{}$h varies across states, as each state has a different energy-source composition. An estimation of these rates can be found at \cite{carbon}.
-
-Let $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total \carbondioxide{} emission is then
+\vspace{-3mm}
 $$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
+Emissions rate $\eta_i$ per kW$\cdot{}$h varies across states based on energy-source composition.  %estimates available from \cite{carbon}.
 \end{block}
 
-\begin{block}{Benchmarks for comparison}
-Our model is the first to integrate practical cooling concerns into geographical load balancing. To show their impact, we will compare the result of our model (Cooling-aware GLB) to the previous Cooling-Oblivious GLB model and the model which simply routes all requests to the nearest data centers (LOCAL). For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
+%\end{frame}
 
-Separately, we compare the performance of our model to the storage model. Storage capacity is quantified as the duration that a data center could operate at maximum load entirely off stored energy (excluding energy usage for cooling). We assume that storage incurs no running cost. We choose data-center systems with 3-hour and 6-hour storage respectively as the benchmark.
+%\begin{frame}{}
 
-We will evaluate the outcomes based on 1) the total cost; 2) the grid (brown) energy usage; and 3) the \carbondioxide{} emissions.
-
-\begin{figure}
-\centering
-\epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
-\caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
-\end{figure}
+\begin{block}{Benchmarks to compare Cooling-aware GLB to GLB LOCAL.}
+%To show effect of integrating cooling concerns into GLB, 
+%For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
+Assume 3-hr and 6-hr storage systems, no running costs for storage, finite storage capacity. 
+% quantified as duration DC operates at max load entirely off stored energy (excl. cooling usage). 
 \end{block}
+\begin{block}{Evaluate outcomes based on 1) the total cost, 2) grid (brown) energy usage, 3) \carbondioxide{} emissions.}
+\end{block}
+\end{frame}
 
+%\begin{frame}{}
+%	\begin{figure}
+%	\centering
+%	\epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
+%	\caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+%	\end{figure}
+%\end{frame}
+
+\begin{frame}{}
+	\begin{figure}
+	\centering
+	\epsfig{file=cost_summer.pdf, height=1.8in, width=4.2in}
+	\caption{Summer optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{}
+	\begin{figure}
+	\centering
+	\epsfig{file=cost_winter.pdf, height=1.8in, width=4.2in}
+	\caption{Winter optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+	\end{figure}
 \end{frame}
 
 \section{Visualization}
-Our numerical experiment generates time series describing routing plans and data center activity. Due to the large quantity of data, the output is hard to interpret when in matrix form. Therefore we developed a visualization tool to help us recognize the key characteristics of the optimal solution quickly. It also works as a simple check for the validity of the solution: we can spot obviously abnormal behaviors in the output.
-
+\begin{frame}{Motivation for Visualization}
+Numerical simulation result is very large time series describing routing plans and data center activity. \\
+\vspace{2mm}
+Hard to interpret large quantity of data in matrix form. \\
+\vspace{2mm}
+Visualization:  
+	\begin{itemize}
+	\item Key characteristics of the optimal solution salient.
+	\item Acts as simple check for validity of solution
+	\item An obvious way to spot abnormal behaviors in the output.
+	\end{itemize}
+\end{frame}
 \begin{frame}{Technical description}
-The output visualization is in Scalable Vector Graphics (SVG) format, a high-quality XML-based vector graphics format supporting fluid animations that display time-series data. This animation can be embedded into a web page.
-
-We also wrote a wrapper XHTML web page to make the simulation easier to use. The user can control the animation (play, pause, or seek into the animation) using the interface on the web page (implemented using Javascript). Possible enhancements could include zooming, panning, and showing/hiding types of map elements.
-
-Both components work in the Chromium web browser and pass the W3C validators.
-
-The back-end script that generates the SVG map from input data is written in the Scala programming language. The script reads in and displays data center locations, client (request source) locations, real solar- and wind-generation traces, and the routings optimized according to the various algorithms (from the output of the Matlab optimizations). We are provided the raw input data in CSV format; Matlab outputs are exported to the NetCDF format for reading into Scala.
-
-We use as a background a map \cite{wikimap} of the 48 contiguous United States obtained from Wikimedia Commons. Points on the map correspond to real-world $(latitude, longitude)$ coordinates according to a mathematical transformation specified with the map; this allows us to draw physical locations at the correct positions on the map.
+ 	\begin{block}{Scalable Vector Graphics (SVG) format}
+	High-quality XML-based vector graphics format supports fluid animations displaying time-series data. \\ 
+	Animation can be embedded into a web page.
+	\begin{block}{Wrapper XHTML web page} 
+	Implemented using Javascript \\	
+	User-friendly, can control animation (play, pause, or seek) using web interface \\
+	Possible enhancements could include zooming, panning, and showing/hiding types of map elements.
+	\begin{block}{Both components work in the Chromium web browser and pass the W3C validators}
+	\end{block}
+	\end{block}
+	\end{block}
+\end{frame}
+\begin{frame}{Technical description, contd.}
+	\begin{block}{Back-end script generating SVG map from input data}
+	Written in Scala programming language. \\
+	Script reads in and displays DC center locations, client (request source) locations, real solar- and wind-generation traces. \\
+	Routings optimized using various algorithms (from Matlab optimization outputs). \\
+	Raw input data in CSV format.\\
+	Matlab outputs exported to NetCDF format for reading into Scala.
+	\end{block}
+	\begin{block}{Background map of the 48 contiguous United States}
+		\begin{itemize} 
+		%Obtained from Wikimedia Commons. \\
+	\item 	Points on map correspond to real-world $(latitude, longitude)$ coordinates according to a mathematical transformation specified with map. 
+	\item 	Allows drawing physical locations at correct positions on map.
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 \begin{frame}{Graphical representation details}
-The visualization page consists of three components: an animation showing the dynamic status of the geographical load balancing system, a line plot showing the aggregate statistics of energy supply and demand, and a progress bar allowing progress scroll and control.
 
-The animation displays 10 data centers on a base map of the United States. Each data center's status is represented by a sector diagram, which is animated over time. The left half of the circle represents the energy demand of the data center: the yellow sector is the energy demand for processing the request, the blue one the energy demand for cooling. The right half of the circle represents the energy supply: the light green sector represents available wind energy, the dark green one represents available solar energy, and the brown one represents the energy usage from the grid. The area of each sector is proportional to the amount of energy (so its radius is proportional to the square root). In addition, each sector diagram is surrounded by a faint circle, which represents the maximum energy usage when the data center operates at full load.
+	\begin{block}{Visualization's three components}
+	Animation of dynamic status of the GLB system. \\
+	Line plot of aggregate statistics of energy supply and demand. \\  
+	Progress bar allows progress scroll and control.
+	\end{block}
 
-The request traffic $\lambda_{d,s}(t)$ is represented by lines connecting each source $s$ and destination data center $d$. The width of the line is linearly proportional to $L_s(t)$, the total volume of requests from $s$. The transparency of the line is linearly proportional to ${\lambda_{d,s}(t)} / {L_s(t)}$, the percentage of the traffic from the source $s$ routed to each data center. A solid black line means all the requests from $s$ are sent to $d$, while a fully transparent line means that no traffic is routed from $s$ to $d$.
-
-The line plot displays four aggregate statistics of interest over time: the yellow line shows the aggregate IT power, the blue one the aggregate energy usage on cooling, the light green one the aggregate wind energy available, and the dark green one the aggregate solar energy available.
-
-The progress bar at the bottom indicates the time elapsed in the animation. The user can pause/resume the animation and seek to the desired time.
+	\begin{block}{Features}
+	Animation displays 10 data centers on base map of United States. \\
+	Sector diagram represents each DC's status, which is animated over time. \\
+	Circle's left half is DC's energy demand: 
+		\begin{itemize}
+		\item{\textcolor{gold}{Yellow sector = energy demand for processing the request}}
+		\item{\textcolor{blue}{Blue sector = energy demand for cooling} }
+		\end{itemize}
+	Circle's right half is energy supply: 
+		\begin{itemize}
+		\item{\textcolor{green}{Light green sector = available wind energy}}
+		\item{\textcolor{dgreen}{Dark green sector = available solar energy}}
+		\item{\textcolor{brown}{Brown sector = energy usage from the grid}}
+		\end{itemize} 
+           \end{block} 
 \end{frame}
 
-\section{Results}
+\begin{frame}{Graphical representation details, contd.}
+
+	Area of sector $\propto$ amount of energy (so radius $\propto$ to $\sqrt{}$). \\ 
+	Faint circle surrounding sector diagram represents maximum energy usage when DC operates at full load. \\
+	Request traffic $\lambda_{d,s}(t)$ represented by lines connecting each source $s$ and destination data center $d$. 
+	Line width linearly $\propto$ $L_s(t)$, total volume of requests from $s$. \\
+	Line transparency linearly $\propto$ ${\lambda_{d,s}(t)} / {L_s(t)}$, percentage of traffic from source $s$ routed to DC.  \\
+	Solid black line means all requests from $s$ are sent to $d$. \\
+	Fully transparent line means no traffic routed from $s$ to $d$.
+	Line plot displays four aggregate statistics of interest over time: 
+	\begin{itemize}
+	\item{\textcolor{gold}{Yellow line = aggregate IT power}}
+	\item{\textcolor{blue}{Blue line = aggregate energy usage on cooling}}
+	\item{\textcolor{green}{Light green line = aggregate wind energy available}}
+	\item{\textcolor{dgreen}{Dark green line = aggregate solar energy available}.}
+	\end{itemize}
+	Bottom progress indicates time elapsed in animation. \\
+	User can pause/resume animation and seek to desired time.
+
+\end{frame}
+
+\section{Test effectiveness results}
+
+\end{document}
+
 \begin{frame}{Cost savings from Cooling-aware GLB}
 
 \begin{figure}
