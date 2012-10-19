@@ -18,20 +18,14 @@
 
 \author[Hirshleifer, Wang, Liu, Wierman] % (optional, for multiple authors)
 {Michael~Hirshleifer\inst{} \and Yizhen~Wang\inst{} \\ \and Zhenhua~Liu \inst{} \and Adam~ Wierman \inst{}}
-\institute[Caltech] % (optional)
+\institute[Caltech]
 {
   \inst{}%
   California Institute of Technology \\
   1200 E California Blvd \\
    Pasadena, CA 91106 \\
- % \and
- % \inst{2}%
-  %Institut für theoretische Philosophie\\
-  %Universität Dort
 }
-\date[Support] % (optional)
-{Caltech SURF Presentation, October 2012 }
-%\subject{Informatik}
+%\subject{@@@@}
 
 
 % TOC at start of each section
@@ -49,59 +43,21 @@
 \newcommand{\ei}{\end{itemize}}
 \newcommand{\itm}{\item}
 
-% \author{
-% % You can go ahead and credit any number of authors here,
-% % e.g. one 'row of three' or two rows (consisting of one row of three
-% % and a second row of one, two or three).
-% %
-% % The command \alignauthor (no curly braces needed) should
-% % precede each author name, affiliation/snail-mail address and
-% % e-mail address. Additionally, tag each line of
-% % affiliation/address with \affaddr, and tag the
-% % e-mail address with \email.
-% %
-% % 1st. author
-% \alignauthor
-% Michael Hirshleifer\\
-% 	\affaddr{California Institute of Technology}\\
-% 	\affaddr{1200 E California Blvd}\\
-% 	\affaddr{Pasadena, California}\\
-% 	\email{111mth@caltech.edu}
-% % 2nd. author
-% \alignauthor
-% Yizhen Wang\\
-% 	\affaddr{California Institute of Technology}\\
-% 	\affaddr{1200 E California Blvd}\\
-% 	\affaddr{Pasadena, California}\\
-% 	\email{ywang3@caltech.edu}
-% \and
-% % 3rd. author
-% \alignauthor
-% Zhenhua Liu\\
-% 	\affaddr{California Institute of Technology}\\
-% 	\affaddr{1200 E California Blvd}\\
-% 	\affaddr{Pasadena, California}\\
-% 	\email{zliu2@caltech.edu}
-% % the prof
-% \alignauthor
-% Adam Wierman\\
-% 	\affaddr{California Institute of Technology}\\
-% 	\affaddr{1200 E California Blvd}\\
-% 	\affaddr{Pasadena, California}\\
-% 	\email{adamw@caltech.edu}
-% }
-% 
-% \date{2012-10-02}
+\date{2012-10-20}
 
 \begin{document}
 
 \frame{\titlepage}
 
 \begin{frame}{Acknowledgements}
-	\begin{block}{}  
-	We are deeply grateful to Professor Adam Wierman for insightful and patient guidance.
-
-  We are grateful to the NSF, Elliot family, and Rose Hills Foundation for financial support.   
+	\begin{block}{}
+		We are deeply grateful to:
+		
+		\begin{itemize}
+			\item Professor Adam Wierman for insightful and patient guidance.
+			\item The NSF, Elliot family, and Rose Hills Foundation for financial support.
+		\end{itemize}
+		
 	\end{block}
 \end{frame}
 
@@ -190,7 +146,7 @@ GLB routes requests from a population center to a data center by trading off lat
 
 \begin{frame}{Summary}
 
-	\begin{block}{Research Goal}  
+	\begin{block}{Research goal}  
 	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficient use of renewable energy.  
 	\end{block}
 	
@@ -198,14 +154,14 @@ GLB routes requests from a population center to a data center by trading off lat
 	Minimize DC electricity cost over time by convex optimization over real workload inputs - temp, solar, \& wind traces.
 	\end{block}
 
-	\begin{block}{Our Contributions} 
+	\begin{block}{Our contributions} 
 	\begin{itemize}
 		\item{Cooling-aware GLB model \\
 			Uses locally available renewable energy more effectively \\
 			Reduces electricity grid usage despite weather shifts\\
 			Potentially uses renewables almost exclusively} 
 		\item{Visualization \\ 
-		Animation of 10 DCs demand \& energy usage (grid \& renewable energy generation) in 48 contiguous U.S. states}  
+		Animation of 10 DCs' demand and usage of energy (grid \& renewable energy generation) in 48 contiguous U.S. states}
 		\item{Test effectiveness of, and refine, routing algorithms using visualization}
 	\end{itemize} 
 	\end{block}
@@ -269,13 +225,13 @@ GLB routes requests from a population center to a data center by trading off lat
 
 \section{Setup}
 
-\begin{frame}{Model Setup}
+\begin{frame}{Model setup}
 
 Modify Liu et al.'s (2011) %\cite{adam:GLB}% 
 model to include cooling costs.
 
 \vspace{3mm}
-\begin{block}{\underline{Key Factors}}
+\begin{block}{\underline{Key factors}}
 \end{block}
 \vspace{-2mm}
 	
