@@ -90,8 +90,8 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 %
 
 \begin{frame}{Motivation, contd.}
-	\begin{block}{DC's use a {\it lot} of power} 
-		High fraction of world non-green energy production.
+	\begin{block}{DCs use a \emph{lot} of power} 
+		Substantial fraction of world non-green energy production.
 		\begin{itemize}
 			\item {Expensive}
 			\item {Dirty (brown energy)}
@@ -103,7 +103,7 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 		          \item{To operate and \textbf{\textcolor{blue}{cool}}}
 			\item{Variable}
 				\begin{itemize} 
-					\item {Over time (e.g., cooling more costly in summer)}  %\cite{datacenter} 	
+					\item {Over time (e.g. cooling more costly in summer)}  %\cite{datacenter} 	
 					\item{Cooling costs vary geographically.}
 		 		\end{itemize}				
 			\item{Some DCs make use of green energy (solar, wind).}
@@ -152,7 +152,7 @@ GLB routes requests from a population center to a data center by trading off lat
 
 \end{frame}
 
-\begin{frame}{Summary}
+\begin{frame}{Summary of our project}
 
 	\begin{block}{Research goal}  
 	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficient use of renewable energy.  
@@ -164,13 +164,13 @@ GLB routes requests from a population center to a data center by trading off lat
 
 	\begin{block}{Our contributions} 
 	\begin{itemize}
-		\item{Cooling-aware GLB model \\
-			Uses locally available renewable energy more effectively \\
-			Reduces electricity grid usage despite weather shifts\\
-			Potentially uses renewables almost exclusively} 
 		\item{Visualization \\ 
 		Animation of 10 DCs' demand and usage of energy (grid \& renewable energy generation) in 48 contiguous U.S. states}
 		\item{Test effectiveness of, and refine, routing algorithms using visualization}
+		\item{Cooling-aware GLB model \\
+			Uses locally available renewable energy more effectively \\
+			Reduces electricity grid usage despite weather shifts\\
+			Potentially uses renewables almost exclusively}
 	\end{itemize} 
 	\end{block}
 
@@ -352,19 +352,15 @@ Grid energy depends on market price in each state $\times$ amount used.
 
 %$\bar{x}$ $\propto$ temperature gradient, maximum air flow rate. 
 
-\vspace{2mm}
-
-\begin{block}{Air cooling cheaper when outside air is cold. }
-\begin{block}{Water cooling cheaper when outside air hot.}
-% Set air flow rate to level that can air cool DC entirely at full workload when outside temperature is lower than   $T - 20^{\circ}\mathrm{C}$. 
-\begin{block}{Cost of chilled-water cooling proportional to processing load (active servers) cooled with water.}  
-\begin{block}{Air cooling cost rises nonlinearly with processing load.}
-\begin{block}{So DC chooses amount of air- vs. water-cooling, as a function of total processing load, to minimize cost (convex optimization).}
-\end{block}
-\end{block}
-\end{block}
-\end{block}
-\end{block}
+\begin{itemize}
+	\item Part of energy cost (demand)
+	\item Air cooling cheaper when outside air is cold
+	\item Water cooling (relatively) cheaper when outside air hot.
+	% Set air flow rate to level that can air cool DC entirely at full workload when outside temperature is lower than   $T - 20^{\circ}\mathrm{C}$. 
+	\item Cost of chilled-water cooling proportional to processing load (active servers) cooled with water.
+	\item Air cooling cost rises nonlinearly with processing load.
+	\item So DC chooses amount of air- vs. water-cooling, as a function of total processing load, to minimize cost (convex optimization).
+\end{itemize}
 
 % *********** Fix in paper ***********
 % \begin{equation}
