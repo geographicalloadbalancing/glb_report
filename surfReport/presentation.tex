@@ -39,9 +39,6 @@
 
 \newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
 \newcommand{\eqdef}{\ensuremath{\overset{\mathrm{def}}{=}}}
-\newcommand{\bi}{\begin{itemize}}
-\newcommand{\ei}{\end{itemize}}
-\newcommand{\itm}{\item}
 
 \date{2012-10-20}
 
@@ -95,10 +92,10 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 \begin{frame}{Motivation, contd.}
 	\begin{block}{DC's use a {\it lot} of power} 
 		High fraction of world non-green energy production.
-		\bi
-			\itm {Expensive}
-			\itm {Dirty (brown energy)}
-		\ei	
+		\begin{itemize}
+			\item {Expensive}
+			\item {Dirty (brown energy)}
+		\end{itemize}	
 	\end{block}
 
 	\begin{block}{DC servers' energy demand} \vspace{-1mm}
@@ -106,7 +103,7 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 		          \item{To operate and \textbf{\textcolor{blue}{cool}}}
 			\item{Variable}
 				\begin{itemize} 
-					\itm {Over time (e.g., cooling more costly in summer)}  %\cite{datacenter} 	
+					\item {Over time (e.g., cooling more costly in summer)}  %\cite{datacenter} 	
 					\item{Cooling costs vary geographically.}
 		 		\end{itemize}				
 			\item{Some DCs make use of green energy (solar, wind).}
@@ -196,17 +193,17 @@ GLB routes requests from a population center to a data center by trading off lat
 
 		\begin{itemize}
 			\item{Introduces cooling costs into GLB algorithm}
-			\bi
+			\begin{itemize}
 				\item Better-informed decisions  
-			\ei
+			\end{itemize}
 			\item{Use actual data center workload, weather, renewable energy (wind, solar) availability and grid electricity prices}
-			\bi
-				\itm {10 Data Center locations serving population centers in 48 contiguous U.S. states}		
-			\ei
+			\begin{itemize}
+				\item {10 Data Center locations serving population centers in 48 contiguous U.S. states}		
+			\end{itemize}
 			\item{Numerically compute the optimal solution.}
-			\bi
-				\itm Determine economic, environmental impact
-			\ei
+			\begin{itemize}
+				\item Determine economic, environmental impact
+			\end{itemize}
 			\item{Implement visualization of simulation solution \\
 				\begin{enumerate}
 					\item{Easier to see what each optimization algorithm is doing.}
@@ -214,7 +211,7 @@ GLB routes requests from a population center to a data center by trading off lat
 					\item{Facilitate development of an implementable algorithm.}
 				\end{enumerate}
 				}			
-			\itm Compare performance using GLB vs. energy storage			
+			\item Compare performance using GLB vs. energy storage			
 		\end{itemize}
 
 \end{frame}
@@ -222,14 +219,14 @@ GLB routes requests from a population center to a data center by trading off lat
 \begin{frame}{The cooling-aware GLB model, contd.}
 
 	\begin{block}{Key insights and results}
-	\bi
+	\begin{itemize}
 		\item{Significantly lower total energy cost, \carbondioxide{} emission halved.}  %  [[Environmentally friendly
-		\bi
-			\itm Distributes requests to locations with cheap energy, favorable weather for cooling  % [[{Lower infrastructure investment, easier to implement }
-		\ei
-		\itm{Cost of running data center fairly constant across seasons, weather, diurnal temp. variation}  
-		\itm {((( Latency ????))) performance of GLB comparable to using storage, while cost is much lower}
-	\ei
+		\begin{itemize}
+			\item Distributes requests to locations with cheap energy, favorable weather for cooling  % [[{Lower infrastructure investment, easier to implement }
+		\end{itemize}
+		\item{Cost of running data center fairly constant across seasons, weather, diurnal temp. variation}  
+		\item {((( Latency ????))) performance of GLB comparable to using storage, while cost is much lower}
+	\end{itemize}
 	\end{block}
 
 \end{frame}
@@ -259,11 +256,11 @@ model to include cooling costs.
 \vspace{-2mm}
 
 \begin{block}{Costs} 
-	\bi
-		\itm Total Cost = Energy Cost + Propagation \& Queuing Delay Costs + Switch Cost
-		\itm {\bf \textcolor{blue}{New: Cooling costs}}
-		\itm 2 Cooling options - Air, Chilled-Water 
-	\ei
+	\begin{itemize}
+		\item Total Cost = Energy Cost + Propagation \& Queuing Delay Costs + Switch Cost
+		\item {\bf \textcolor{blue}{New: Cooling costs}}
+		\item 2 Cooling options - Air, Chilled-Water 
+	\end{itemize}
 \end{block}
 
 \end{frame}
@@ -272,14 +269,14 @@ model to include cooling costs.
 
 
 	\begin{block}{IT Load $L$ in each state}
- 	\bi
+ 	\begin{itemize}
 		\item 	Obtain base load from real-world traces (HP Labs).
 		\item 	Scale by state population. 
 		\item 	Shift by time zone.
-	\ei
+	\end{itemize}
 	\end{block}
 \vspace{-3mm}
-	 \begin{block}{Data centers}
+	\begin{block}{Data centers}
 			\begin{itemize}
 				\item        1 Google data center in each of 10 states. % limit = 2 $\times$ peak load at $i$  \vspace{1mm} 
 				\item 	Capacity limited by finite \# servers in each DC.
@@ -287,15 +284,15 @@ model to include cooling costs.
 	\end{block}
 \vspace{-3mm}
 	\begin{block}{Renewable availability} 
-	\bi
-		\itm 	DCs use combination of green \& brown energy sources.
+	\begin{itemize}
+		\item 	DCs use combination of green \& brown energy sources.
 			\begin{itemize}
 				\item  Use avg mix of 80\% of wind and 20\% solar (Liu et al. 2011). % \cite{adam:GLB}.
 			\end{itemize}
-		\itm  Proportional to wind speed \& solar irradiance; from http://wind.nrel.gov/.  %\cite{renew1} \cite{renew2}. 
-		\itm Fluctuates with season, sunrise/sunset time
-		\itm Capacity = $c \times$ national aggregate demand under full load
-		\ei
+		\item  Proportional to wind speed \& solar irradiance; from http://wind.nrel.gov/.  %\cite{renew1} \cite{renew2}. 
+		\item Fluctuates with season, sunrise/sunset time
+		\item Capacity = $c \times$ national aggregate demand under full load
+		\end{itemize}
 	\end{block}
 \end{frame}
 
@@ -308,7 +305,7 @@ model to include cooling costs.
 % $d_{ij}$ = travel time from $i$ to $j$ at transmission speed $200 \frac{\mathrm{km}}{\mathrm{ms}}$ + $5 \mathrm{ms}$. \vspace{1mm} 
 
 Queuing delay at DC
-		\bi \itm Calculated using a sharing queue model. \ei
+		\begin{itemize} \item Calculated using a sharing queue model. \end{itemize}
 % Total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 /
 %  \mathrm{ms}$}.
 \end{block}
