@@ -9,11 +9,12 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 
+\usecolortheme[named=dgreen]{structure}
+ \setbeamertemplate{footline}[page number]
 
+\title{Cooling-Aware  Green Geographical Load Balancing Visualized}
 
-\title{Cooling-Aware Geographical Load Balancing Visualized}
-
-\subtitle{Research supported by NSF, Elliot Family, and Rose Hills Foundation}
+% \subtitle{Research supported by NSF, Elliot Family, and Rose Hills Foundation}
 
 \author[Hirshleifer, Wang, Liu, Wierman] % (optional, for multiple authors)
 {Michael~Hirshleifer\inst{} \and Yizhen~Wang\inst{} \\ \and Zhenhua~Liu \inst{} \and Adam~ Wierman \inst{}}
@@ -42,11 +43,11 @@
   \end{frame}
 }
 
-
 \newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
 \newcommand{\eqdef}{\ensuremath{\overset{\mathrm{def}}{=}}}
-
-
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\itm}{\item}
 
 % \author{
 % % You can go ahead and credit any number of authors here,
@@ -96,15 +97,101 @@
 
 \frame{\titlepage}
 
+\begin{frame}{Acknowledgements}
+	\begin{block}{}  
+	We are deeply grateful to Professor Adam Wierman for insightful and patient guidance.
+
+  We are grateful to the NSF, Elliot family, and Rose Hills Foundation for financial support.   
+	\end{block}
+\end{frame}
+
+
 \begin{frame}
 \frametitle{Outline}
 \tableofcontents[part=1,pausesections]
 \end{frame}
 
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Motivation}
+\begin{block}
+{Vast, high-growth energy use by data centers.}
+The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 2016, Forecasts Pike Research, WSJ September 14, 2012, 5:00 a.m. ET  
+
+\includegraphics[scale = 0.6]{datacenter.jpg}
+
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Motivation, contd.}
+\begin{block}
+{How can we make them `green'?}
+
+\includegraphics[scale = 0.15]{green.jpg}
+
+\end{block}
+\end{frame}
+%
+
+\begin{frame}{Motivation, contd.}
+	\begin{block}{DC's use a {\it lot} of power} 
+		High fraction of world non-green energy production.
+		\bi
+			\itm {Expensive}
+			\itm {Dirty (brown energy)}
+		\ei	
+	\end{block}
+
+	\begin{block}{DC servers' energy demand} \vspace{-1mm}
+		\begin{itemize}
+		          \item{To operate and \textbf{\textcolor{blue}{cool}}}
+			\item{Variable}
+				\begin{itemize} 
+					\itm {Over time (e.g., cooling more costly in summer)}  %\cite{datacenter} 	
+					\item{Cooling costs vary geographically.}
+		 		\end{itemize}				
+			\item{Some DCs make use of green energy (solar, wind).}
+		\end{itemize}
+ 	\end{block}
+\end{frame}
+
+
+\begin{frame}{Motivation, contd.}
+
+	\begin{block}{Problem: Green energy highly variable} 
+		\begin{itemize}
+			 \item{Time of day, cloud cover, wind speed.}
+			 \item{Does not match user demand. }
+			\item{Very expensive to store.}
+			\item{Sometimes need to buy brown energy off grid, increase pollution.}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{What is Geographical Load Balancing?}   
+\begin{block}{Latency versus Green Energy}
+
+GLB routes requests from a population center to a data center by trading off latency with green energy use. 
+% Show map next slide. Tell audience to ignore map details ot focus on point being made. Talk about how a request could be routed either to the nearest DC,
+% or to the one that has available green energy. Explain concept of GLB. 
+
+\end{block}
+\vspace{-7mm}
+\begin{figure}
+\centering
+\epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
+\caption{Screenshot of the visualization, running in the Chromium web browser.}
+\end{figure}
+
+\end{frame}
+
 \begin{frame}{Summary}
 
 	\begin{block}{Research Goal}  
-	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficiency use of renewable energy.  
+	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficient use of renewable energy.  
 	\end{block}
 	
 	\begin{block}{Issue} 
@@ -114,9 +201,9 @@
 	\begin{block}{Our Contributions} 
 	\begin{itemize}
 		\item{Cooling-aware GLB model \\
-			DCs use locally available renewable energy more effectively \\
-			Reduce electricity grid usage, even across seasons \\
-			Potentially use renewables almost exclusively} 
+			Uses locally available renewable energy more effectively \\
+			Reduces electricity grid usage despite weather shifts\\
+			Potentially uses renewables almost exclusively} 
 		\item{Visualization \\ 
 		Animation of 10 DCs demand \& energy usage (grid \& renewable energy generation) in 48 contiguous U.S. states}  
 		\item{Test effectiveness of, and refine, routing algorithms using visualization}
@@ -125,259 +212,226 @@
 
 \end{frame}
 
-\section{Introduction}
-
-\begin{frame}{Background}
-
-	\begin{block}{Strong need for “green” routing algorithms to reduce electricity costs and pollution} 
-		Many, high growth in DC; DC energy usage major source of operating costs; DCs consume high fraction of US/world non-green energy production; Major polluter.
-	\end{block}
-
-	\begin{block}{DC servers energy use} \vspace{-1mm}
-		\begin{itemize}
-		          \item{To operate and \textbf{cool} (previously ignored in literature)}
-			\item{Substantial and variable (especially for cooling in summer). \\ %\cite{datacenter} 
-				\begin{itemize} \item{Exploit geog.heterogeneity of DC cooling costs.) } \end{itemize}
-				}
-			\item{Some DCs partly operated on green energy (solar, wind); Problem - green energy highly variable 
-				\begin{itemize} \item{Time of day, cloud cover, wind speed.}
-					               \item{Does not match user demand. }
-				\end{itemize} }
-			\item{Prohibitively expensive to store green energy.}
-			\item{Need to buy off of grid, increase pollution.}
-		\end{itemize}
-	\end{block}
-
-\end{frame}
-
 \begin{frame}{Previous GLB models}
 
-	\begin{block}{Old models}
-		Solve DC redundancy by geographical routing to minimize latency; Ignore energy efficiency.
+	\begin{block}{Older models}
+		Geographical routing to minimize latency, ignoring energy efficiency.
 	\end{block}
 
-	\begin{block}{Wierman group's green GLB model, Liu et al 2011 } % \cite{adam:GLB}
+	\begin{block}{Wierman group's green GLB model, Liu et al. (2011 )} % \cite{adam:GLB}
 		\begin{itemize}
-			\item{Tradeoffs min. latency from geographical distance and min. electricity costs using green sources.}
-			\item{Optimal or near-optimal  routing algorithms for efficient GLB (given functional form for cost of increased latency).}
-			\item{Can power DC networks almost entirely off renewable energy without undue increase in latency} 
+			\item{Balances advantages of using green sources.}
 		\end{itemize}
 	\end{block}  	
 \end{frame}
 
-\begin{frame}{Cooling-aware geographical load balancing model}
+\begin{frame}{The cooling-aware GLB model}
 
-%	\begin{block}{Contributions}
 		\begin{itemize}
-			\item{Consider cooling costs.} 
-			\item{Solution achieves significantly lower total energy cost \& lower \carbondioxide{} emission.}
-			\item{Evaluate economic, environmental impact.}
-			\item{Use actual data center workload, weather, renewable energy (wind, solar) availability and grid electricity prices to numerically compute the optimal solution.}
-			\item{10 Data Center locations in 48 contiguous U.S. states.} 
+			\item{Introduces cooling costs into GLB algorithm}
+			\bi
+				\item Better-informed decisions  
+			\ei
+			\item{Use actual data center workload, weather, renewable energy (wind, solar) availability and grid electricity prices}
+			\bi
+				\itm {10 Data Center locations serving population centers in 48 contiguous U.S. states}		
+			\ei
+			\item{Numerically compute the optimal solution.}
+			\bi
+				\itm Determine economic, environmental impact
+			\ei
 			\item{Implement visualization of simulation solution \\
-				Advantages: 
 				\begin{enumerate}
 					\item{Easier to see what each optimization algorithm is doing.}
 					\item{Can test effectiveness of, and refine, routing algorithms.} 
 					\item{Facilitate development of an implementable algorithm.}
 				\end{enumerate}
 				}			
+			\itm Compare performance using GLB vs. energy storage			
 		\end{itemize}
-%	\end{block}
+
 \end{frame}
 
-\begin{frame}{Cooling-aware GLB model results}
+\begin{frame}{The cooling-aware GLB model, contd.}
 
-	\begin{block}{Low variation in optimized cost despite volatile wind, sun.}
-		\begin{itemize} 
-			\item{Solution reduces total system cost by distributing requests to locations with cheap energy, favorable weather for cooling.}
-			\item{Addresses DC cooling in locations with extreme climate or weather (diurnal temp. variation).}
-		\end{itemize}
+	\begin{block}{Key insights and results}
+	\bi
+		\item{Significantly lower total energy cost, \carbondioxide{} emission halved.}  %  [[Environmentally friendly
+		\bi
+			\itm Distributes requests to locations with cheap energy, favorable weather for cooling  % [[{Lower infrastructure investment, easier to implement }
+		\ei
+		\itm{Cost of running data center fairly constant across seasons, weather, diurnal temp. variation}  
+		\itm {((( Latency ????))) performance of GLB comparable to using storage, while cost is much lower}
+	\ei
 	\end{block}
-	\vspace{-3mm}
-	\begin{block}{Reduction in \carbondioxide{}, halved}
-	\end{block}
-	\vspace{-3mm}
-	\begin{block}{More comprehensive treatment of energy costs sources - cooling; better-informed decisions.}
-	\end{block}
-	\vspace{-3mm}
-	\begin{block}{Considering cooling superior to adding non-green storage to model lowers total cost and carbon emissions.}
-	\end{block}
-	\vspace{-3mm}
-	\begin{block}{Lower infrastructure investment, easier to implement }
-	\end{block}
+
 \end{frame}
 
 \section{Setup}
 
 \begin{frame}{Model Setup}
 
-Each DC has a cooling system. % (\cite{adam:cooling}). 
 Modify Liu et al.'s (2011) %\cite{adam:GLB}% 
-model to include cooling costs. Use convex optimization to solve model as in Liu et al. (2011b). %\cite{adam:GLBfull}.
+model to include cooling costs.
 
-	\begin{block}{Workload}
+\vspace{3mm}
+\begin{block}{\underline{Key Factors}}
+\end{block}
+\vspace{-2mm}
+	
+\begin{block}{IT Load}
+\end{block}
+\vspace{-2mm}
 
-	Web of source requests assumed at geog. centers in 48 U.S. states. 
+ \begin{block}{Supply of renewables at different DCs}
+\end{block}
+\vspace{-2mm}
 
-	$L_j(t)$, mean request arrival rate from source $j$ at interval $t$ from real-world traces.
+\begin{block}{Storage}
+\end{block}
+\vspace{-2mm}
 
-	Workload base trend from trace at H-P Labs.
+\begin{block}{Costs} 
+	\bi
+		\itm Total Cost = Energy Cost + Propagation \& Queuing Delay Costs + Switch Cost
+		\itm {\bf \textcolor{blue}{New: Cooling costs}}
+		\itm 2 Cooling options - Air, Chilled-Water 
+	\ei
+\end{block}
 
-	Scale workload of each request source by state population. 
+\end{frame}
 
+\begin{frame}{Assumptions}
+
+
+	\begin{block}{IT Load $L$ in each state}
+ 	\bi
+		\item 	Obtain base load from real-world traces (HP Labs).
+		\item 	Scale by state population. 
+		\item 	Shift by time zone.
+	\ei
 	\end{block}
-
-	\begin{block}{Renewable energy output} 
-
-            Use 10min interval real wind speed \& insolation traces from http://wind.nrel.gov/.  %\cite{renew1} \cite{renew2}. 
-	%@@@@@@[Is this true? I thought the traces were (calculated) power output.] 
-
-	\vspace{1mm}
-           DC renewable energy generation rate per plant $\propto$   Weather data.
-
-	Total renewable energy =  $c$ $\times$ Total energy demand to process all requests, 	$c$ varies in $[0.5, 4]$ with a step length of $0.5$.
-
-	 Use a mix of 80\% of wind and 20\% following Liu et al. (2011). % \cite{adam:GLB}.
+\vspace{-3mm}
+	 \begin{block}{Data centers}
+			\begin{itemize}
+				\item        1 Google data center in each of 10 states. % limit = 2 $\times$ peak load at $i$  \vspace{1mm} 
+				\item 	Capacity limited by finite \# servers in each DC.
+			\end{itemize}
+	\end{block}
+\vspace{-3mm}
+	\begin{block}{Renewable availability} 
+	\bi
+		\itm 	DCs use combination of green \& brown energy sources.
+			\begin{itemize}
+				\item  Use avg mix of 80\% of wind and 20\% solar (Liu et al. 2011). % \cite{adam:GLB}.
+			\end{itemize}
+		\itm  Proportional to wind speed \& solar irradiance; from http://wind.nrel.gov/.  %\cite{renew1} \cite{renew2}. 
+		\itm Fluctuates with season, sunrise/sunset time
+		\itm Capacity = $c \times$ national aggregate demand under full load
+		\ei
 	\end{block}
 \end{frame}
 
-\begin{frame}{The internet-scale system}
+\begin{frame}{Cost Factors}
 
-Set $\mathcal{N}$ of 10 DCs at Google DCs in 10 states. \vspace{1mm}  %California, Washington, Oregon, Illinois, Georgia, Virginia, Texas, Florida, North Carolina, and South Carolina. 
-
-\#servers $X_i$ at DC $i$ = 2 $\times$ peak load at $i$  \vspace{1mm} 
-
-% ***** when all requests are routed to nearest DCs. ******
-
-Optimization: Choose routing plan $\lambda_{ij}(t)$ and \# active servers $x_i(t)$  to minimize total cost (= delay cost + energy cost + switching cost).
+ Optimization Problem: Choose routing plan and \# active servers to minimize total cost (= delay cost + switching cost + energy cost).
 
 \begin{block}{Delay cost}
-= Propagation delay $d_{ij}$ from source $j$ to DC$_i$  + queuing delay at $i$.
+ Propagation delay based on distance from population center to DC. 
+% $d_{ij}$ = travel time from $i$ to $j$ at transmission speed $200 \frac{\mathrm{km}}{\mathrm{ms}}$ + $5 \mathrm{ms}$. \vspace{1mm} 
 
-$d_{ij}$ = travel time from $i$ to $j$ at transmission speed $200 \frac{\mathrm{km}}{\mathrm{ms}}$ + $5 \mathrm{ms}$. \vspace{1mm} 
-
-Queuing delay calculated from the parallel M/G/1/Processor.  \vspace{1mm} 
-
-Sharing queue model: Total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 / \mathrm{ms}$}.
-
-\end{block}
-
-\end{frame}
-
-\begin{frame}{Cooling-aware optimization}
-
-	Minimize energy consumption to maintain DC at $T = 25^{\circ}\textrm{C}$. 
-
-	\#active servers $x = x_a + x_c$  where a=air-cooled, c=water chilled. \vspace{1mm} 
-
-	Find best division between $x_a$ and $x_c$.
-
-	\begin{block}{Air-cooling energy consumption} \vspace{-3mm}
-	\begin{equation}
-           c_a(x) = k \cdot x^3, 0 \leq x \leq \bar{x}, k > 0
- 	\end{equation}
-
- $k$ $\propto$ temperature gradient between the inside and outside air. 
-
-$\bar{x}$ = maximum \#servers cooled by air cooling alone. 
-
-$\bar{x}$ $\propto$ temperature gradient, maximum air flow rate. 
-
-\vspace{2mm}
-
-We set air flow rate to level that can air cool DC entirely at full workload when outside temperature is lower than   $T - 20^{\circ}\mathrm{C}$. 
-\end{block}
-\end{frame}
-
-\begin{frame}{Chilled-water cooling}
-
-Energy consumption roughly linear in IT demand empirically: 
-\begin{equation}
-c_c(x) = \gamma \cdot x
-\end{equation}
-%Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
-%For notational convenience, define
-\begin{equation}
-	x^+ \eqdef \min(0, x)
-\end{equation}
-% to be $x$ clamped to be positive.
-
-\begin{block}{Optimal cooling portfolio}
-\begin{equation}
-c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_c)^+ + kx_2^3
-\end{equation}
-which yields
-$$
-c(x) = \left\{ \begin{array}{ll}
-	k \cdot x^3 & \mbox{if $x \geq x_s$}\\
-	k \cdot x_s^3 + \gamma \cdot (x-x_s) & \mbox{otherwise}\end{array} \right.
-$$
-where $x_s = \min \left(\sqrt{\gamma/3k}, \bar{x}\right)$ is the threshold for when chiller cooling is necessary.
-
-\end{block}
-\end{frame}
-
-%To explore seasonality on cooling model performance
-% Hourly temperature data from Week 1 January 2012 from \cite{temp} and Week 1 July 2012. 
-
-\begin{frame}{Data center visualization}
-
-\begin{figure}
-\centering
-\epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
-\caption{Screenshot of the visualization, running in the Chromium web browser.}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}{}
-\begin{block}{Energy cost}
-Cost of running active servers + cost of maintaining constant working temperature. 
-
-Assume DC renewable energy cost is 0. 
-
-Grid energy cost: \vspace{-3mm}
-\begin{equation}
-p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t))^+
-\end{equation}
-$p_i$ = electricity price, 
-$x_i(t)$ = \#active servers in time interval $t$,
-
-$l(x_i(t))$ = linear function of energy consumption, %of active servers or IT demand in time interval 
-$c(x_i(t))$ = energy usage for cooling, $r_i(t)$ = renewable energy availability, 
-
-$p_i$  = constant real statistic for each state. 
+Queuing delay at DC
+		\bi \itm Calculated using a sharing queue model. \ei
+% Total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 /
+%  \mathrm{ms}$}.
 \end{block}
 
 \begin{block}{Switching cost}
-Delay, wear \& tear cost switching on/off servers. DC workload updated every 10 mins. Switching cost weight $\beta = 6$.
-$$\beta \cdot (x_i(t+1) - x_i(t))^+$$
+Delay, wear \& tear cost switching on/off servers. %DC workload updated every 10 mins. 
+% Switching cost weight $\beta = 6$.$$\beta \cdot (x_i(t+1) - x_i(t))^+$$
+\end{block}
+
+\begin{block}{Energy cost}
+Cost of running active servers + \textcolor{blue}{Cooling cost} 
+
+Renewable energy cost is free.
+
+Grid energy depends on market price in each state $\times$ amount used. 
+	% \begin{equation}
+	%p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t))^+
+	%\end{equation}
+	%$p_i$ = electricity price, 
+	%$x_i(t)$ = \#active servers in time interval $t$,
+	%$l(x_i(t))$ = linear function of energy consumption, %of active servers or IT demand in time interval 
+	%$c(x_i(t))$ = energy usage for cooling, $r_i(t)$ = renewable energy availability, 
+	%$p_i$  = constant real statistic for each state. 
 \end{block}
 
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{\textcolor{blue}{Cooling costs}}
 
-\begin{block}{Storage}
-DC can store energy (batteries, supercapacitors, flywheels).
+  
+%	Minimize energy consumption to maintain DC at $T = 25^{\circ}\textrm{C}$. 
+%	\#active servers $x = x_a + x_c$  where a=air-cooled, c=water chilled. \vspace{1mm} 
+%	Find best division between $x_a$ and $x_c$.
+%	\begin{block}{Air-cooling energy consumption} \vspace{-3mm}
 
-Electricity storage at time $t$ is $0 \leq es_i(t) \leq ES_i$. 
+% ********** Fix in paper ******
+%	\begin{equation}
+%          c_a(x) = k \cdot (x_a)^3, 0 \leq x_a \leq \bar{x}, k > 0
+% 	\end{equation}
+% ************
+% $k$ $\propto$ temperature gradient between the inside and outside air. 
 
-$ES_i$ = maximum storage capacity.  Storage rate is
-$$e_i(t) = \rho \cdot (es_i(t) - es_i(t+1))$$
-Positive $e_i(t)$ means discharging, negative charging. 
+%$\bar{x}$ = maximum \#servers cooled by air cooling alone. 
 
-Assume $\rho = 1$, charging or discharging efficiency is perfect.
+%$\bar{x}$ $\propto$ temperature gradient, maximum air flow rate. 
 
-Energy cost with storage is
-\begin{equation}
-p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
-\end{equation}
+\vspace{2mm}
+
+\begin{block}{Air cooling cheaper when outside air is cold. }
+\begin{block}{Water cooling cheaper when outside air hot.}
+% Set air flow rate to level that can air cool DC entirely at full workload when outside temperature is lower than   $T - 20^{\circ}\mathrm{C}$. 
+\begin{block}{Cost of chilled-water cooling proportional to processing load (active servers) cooled with water.}  
+\begin{block}{Air cooling cost rises nonlinearly with processing load.}
+\begin{block}{So DC chooses amount of air- vs. water-cooling, as a function of total processing load, to minimize cost (convex optimization).}
 \end{block}
+\end{block}
+\end{block}
+\end{block}
+\end{block}
+
+% *********** Fix in paper ***********
+% \begin{equation}
+% c_c(x) = \gamma \cdot x_c
+% \end{equation}
+% Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
+% For notational convenience, define
+% \begin{equation}
+%	x^+ \eqdef \min(0, x)
+% \end{equation}
+% to be $x_c$ **** constrained *** to be positive.
+
+%\begin{block}{Optimal cooling portfolio}
+%\begin{equation}
+%c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_a)^+ + k(x_a)^3
+%\end{equation}
+%which yields
+%$$
+%c(x) = \left\{ \begin{array}{ll}
+%	k \cdot x^3 & \mbox{if $x \geq x_s$}\\
+%	k \cdot x_s^3 + \gamma \cdot (x-x_s) & \mbox{otherwise}\end{array} \right.
+%$$
+%where $x_s = \min \left(\sqrt{\gamma/3k}, \bar{x}\right)$ is the threshold for when chiller cooling is necessary.
+%\end{block}
+
+
+%To explore seasonality on cooling model performance
+% Hourly temperature data from Week 1 January 2012 from \cite{temp} and Week 1 July 2012. 
 \end{frame}
 
-\begin{frame}{Optimization problem - Minimize total costs}
+\begin{frame}{Minimize total costs using convex optimization}
 
 \begin{align*}
 \min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
@@ -398,61 +452,32 @@ subject to
 
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{Minimize total costs using convex optimization}
+
+\begin{align*}
+\min_{\bf{x}(t), \bf{\lambda}(t)} 
+& \overbrace{ \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ }^{\bf \textcolor{red}{Energy \ Cost}} \\
+& + \overbrace{ \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}} 
+\lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) }^{\bf \textcolor{red}{Delay \ Cost}}  \\
+& + \overbrace{ \beta \cdot (x_i(t+1) - x_i(t))^+ }^{\bf \textcolor{red}{Switching Cost}}
+\end{align*}
+\vspace{-2mm}
+
+ %\fcolorbox{red}{white}{*****}
+%Min (\#servers, routing plan)  [Grid costs + 
+%\end{frame}
+%\begin{frame}{}
 
 	\begin{block}{Boundary conditions model real-world constraints:}
-	\begin{enumerate}
+	\begin{itemize}
 	\item
 	GLB system processes all requests. Each DC gets $>0$ work.
 	\item
 	Each DC has finite server capacity. %cannot process requests $>$ computational capacity; server capacity finite.
 	\item
-	Each DC's energy storage capacity bounded [$0$, fixed cap].
-	\end{enumerate}
+	Each DC's energy storage capacity bounded.
+	\end{itemize}
 	\end{block}
-\vspace{-3mm}
-\begin{block}{\carbondioxide{} emission}
-\vspace{-3mm}
-$$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
-Emissions rate $\eta_i$ per kW$\cdot{}$h varies across states based on energy-source composition.  %estimates available from \cite{carbon}.
-\end{block}
-
-%\end{frame}
-
-%\begin{frame}{}
-
-\begin{block}{Benchmarks to compare Cooling-aware GLB to GLB LOCAL.}
-%To show effect of integrating cooling concerns into GLB, 
-%For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
-Assume 3-hr and 6-hr storage systems, no running costs for storage, finite storage capacity. 
-% quantified as duration DC operates at max load entirely off stored energy (excl. cooling usage). 
-\end{block}
-\begin{block}{Evaluate outcomes based on 1) the total cost, 2) grid (brown) energy usage, 3) \carbondioxide{} emissions.}
-\end{block}
-\end{frame}
-
-%\begin{frame}{}
-%	\begin{figure}
-%	\centering
-%	\epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
-%	\caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
-%	\end{figure}
-%\end{frame}
-
-\begin{frame}{}
-	\begin{figure}
-	\centering
-	\epsfig{file=cost_summer.pdf, height=1.8in, width=4.2in}
-	\caption{Summer optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{}
-	\begin{figure}
-	\centering
-	\epsfig{file=cost_winter.pdf, height=1.8in, width=4.2in}
-	\caption{Winter optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
-	\end{figure}
 \end{frame}
 
 \section{Visualization}
@@ -489,6 +514,21 @@ Visualization:
 	Raw input data in CSV format.\\
 	Matlab outputs exported to NetCDF format for reading into Scala.
 	\end{block}
+
+\end{frame}
+
+\begin{frame}{Data center visualization}
+
+\begin{figure}
+\centering
+\epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
+\caption{Screenshot of the visualization, running in the Chromium web browser.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Graphical representation details, Speaker Notes}
+
 	\begin{block}{Background map of the 48 contiguous United States}
 		\begin{itemize} 
 		%Obtained from Wikimedia Commons. \\
@@ -496,16 +536,15 @@ Visualization:
 	\item 	Allows drawing physical locations at correct positions on map.
 		\end{itemize}
 	\end{block}
-\end{frame}
-
-\begin{frame}{Graphical representation details}
-
+\vspace{-3mm}
 	\begin{block}{Visualization's three components}
 	Animation of dynamic status of the GLB system. \\
 	Line plot of aggregate statistics of energy supply and demand. \\  
 	Progress bar allows progress scroll and control.
 	\end{block}
+\end{frame}
 
+\begin{frame}{Graphical representation details, Speaker notes contd.}
 	\begin{block}{Features}
 	Animation displays 10 data centers on base map of United States. \\
 	Sector diagram represents each DC's status, which is animated over time. \\
@@ -523,15 +562,18 @@ Visualization:
            \end{block} 
 \end{frame}
 
-\begin{frame}{Graphical representation details, contd.}
+\begin{frame}{Graphical representation details, Speaker notes, contd.}
 
 	Area of sector $\propto$ amount of energy (so radius $\propto$ to $\sqrt{}$). \\ 
 	Faint circle surrounding sector diagram represents maximum energy usage when DC operates at full load. \\
-	Request traffic $\lambda_{d,s}(t)$ represented by lines connecting each source $s$ and destination data center $d$. 
+	Request traffic $\lambda_{d,s}(t)$ represented by lines connecting each source $s$ and destination data center $d$. \\
 	Line width linearly $\propto$ $L_s(t)$, total volume of requests from $s$. \\
 	Line transparency linearly $\propto$ ${\lambda_{d,s}(t)} / {L_s(t)}$, percentage of traffic from source $s$ routed to DC.  \\
 	Solid black line means all requests from $s$ are sent to $d$. \\
 	Fully transparent line means no traffic routed from $s$ to $d$.
+\end{frame}
+
+\begin{frame}{Graphical representation details, Speaker notes, contd.}
 	Line plot displays four aggregate statistics of interest over time: 
 	\begin{itemize}
 	\item{\textcolor{gold}{Yellow line = aggregate IT power}}
@@ -541,38 +583,137 @@ Visualization:
 	\end{itemize}
 	Bottom progress indicates time elapsed in animation. \\
 	User can pause/resume animation and seek to desired time.
-
 \end{frame}
 
-\section{Test effectiveness results}
+
+\section{Testing effectiveness of results}
+
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{Cost saving}
+\includegraphics[scale = 0.37]{cost_comparison.pdf}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{Seasonality}
+\includegraphics[scale = 0.5]{cost_diff.pdf}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{Carbon Emission}
+\includegraphics[scale = 0.5]{carbon_summer.pdf}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{vs Storage}
+\includegraphics[scale = 0.5]{cost_storage.pdf}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{vs Storage}
+\includegraphics[scale = 0.5]{brown_storage.pdf}
+\end{block}
+\end{frame}
+%
+%
+%\begin{frame}
+%\frametitle{Future Work}
+%\begin{block}
+%{We can still improve}
+%\begin{itemize}
+%\item
+%the online algorithm
+%	\begin{itemize}
+%	\item
+%	involves prediction, needs to be close the optimal.
+%	\end{itemize}
+%\item
+%dynamic pricing
+%	\begin{itemize}
+%	\item
+%	involves changing energy price, which is the general case.
+%	\end{itemize}
+%\end{itemize}
+%\end{block}
+%\end{frame}
+
+\begin{frame}{Future work}
+
+Extend simulation and visualization software to:
+
+\begin{itemize}
+\item Incorporate other kinds of renewables - tailor to local renewables \& storage systems.
+\item Endogenize data centers - Build new ones? 
+\item Optimize timing of switching routes - currently assume algorithm switches routing at fixed time intervals. 
+\item Optimize by relying more on wind - currently assume 80/20 wind/solar mix but almost always windy somewhere whereas night fall in large swath of US for part of day. 
+\item Examine dynamic grid price.  
+\end{itemize}
+
+\end{frame}
+\end{document} 
+
+
+
+\begin{frame}{}
+
+\begin{block}{Benchmarks to compare Cooling-aware GLB to other models.}
+%To show effect of integrating cooling concerns into GLB, 
+%For the two benchmark models, the cooling optimization is done after the routing scheme is determined.
+%Assume 3-hr and 6-hr storage systems, no running costs for storage, finite storage capacity. 
+% quantified as duration DC operates at max load entirely off stored energy (excl. cooling usage). 
+\end{block}
+\begin{block}{Evaluate outcomes based on 1) the total cost, 2) grid (brown) energy usage, 3) \carbondioxide{} emissions.}
+\end{block}
+\end{frame}
+
+%\begin{frame}{}
+%	\begin{figure}
+%	\centering
+%	\epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
+%	\caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+%	\end{figure}
+%\end{frame}
+
+\begin{frame}{}
+	\begin{figure}
+	\centering
+	\epsfig{file=cost_summer.pdf, height=1.8in, width=4.2in}
+	\caption{Summer optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{}
+	\begin{figure}
+	\centering
+	\epsfig{file=cost_winter.pdf, height=1.8in, width=4.2in}
+	\caption{Winter optimized costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
+	\end{figure}
+\end{frame}
+
+
 
 \end{document}
 
-\begin{frame}{Cost savings from Cooling-aware GLB}
-
-\begin{figure}
-\centering
-\epsfig{file=cost_diff.pdf, height=2.2in, width=3.2in}
-\caption{The difference between optimal costs in summer/winter for both Cooling-aware and Cooling-oblivious GLB}
-\end{figure}
-
-The cooling-aware geographical load balancing model reduces firm's energy cost by routing the requests to locations where energy is cheap and cooling is easy. Such a savings outweighs the increase in delay cost. Hence our model is consistent profit maximization by a firm.
-
-%In this experiment, the aggregate amount of renewable energy is set to be the total IT demand multiplied by a coefficient, where the coefficient series is the integer multiples of 0.5 within [0.5, 4]. We run the experiment under both summer and winter weather.
-
-Our first experiment explores the cost efficiency of the this model. Figure 2 illustrates the extent of total cost savings of our model. We choose the total cost under Cooling-oblivious GLB and LOCAL as the benchmark. The Cooling-aware model gives lower cost than both benchmarks. This edge is rather clear under two situations. First, in summer when cooling is expensive, the Cooling-aware model significantly outperforms Cooling-oblivious model; by considering the energy cost of cooling, it makes routing decisions to use renewable energy optimally. Second, when the aggregate renewable energy available lies between once and twice the aggregate demand, and some but not all data center locations have a surplus in renewables, the Cooling-aware GLB exploits this surplus better than the benchmarks.
-
-We are interested in how well the Cooling-aware GLB model works in different seasons and weather conditions. Figure 3 shows the difference between the optimized costs in summer and in winter using each model. The previous Cooling-oblivious model's performance varies significantly with seasonality; our Cooling-aware GLB model's performance is more robust. This finding suggests that our Cooling-aware model exploits the heterogeneity in weather to reduce the energy required for cooling.
-%\begin{figure}
-%\centering
-%\epsfig{file=opt_cost_comparison.pdf, height=2.2in, width=3.2in}
-%\caption{A sample black and white graphic (.eps format).}
-%\end{figure}
-\end{frame}
 
 
 \begin{frame}{Environmental impact - \carbondioxide{} savings}
-
 
 \begin{figure}
 \centering
@@ -580,13 +721,36 @@ We are interested in how well the Cooling-aware GLB model works in different sea
 \caption{Comparison of carbon emission of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL.}
 \end{figure}
 
-
-The geographical load balancing method model exploits variation in energy costs by routing requests to where energy cost is low. When the data centers have on-site renewable energy plants (as in our setting), renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has the desirable side-effect of reducing carbon emissions.
-
-We can estimate the \carbondioxide{} emissions by multiplying the grid energy usage of each data center location by the \carbondioxide{} emission per energy unit. Figure 4 shows the \carbondioxide{} emission comparison of each model in summer. By using the Cooling-aware GLB model, aggregate carbon emissions can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, the carbon emission of Cooling-aware GLB is even less than half of that of Cooling-oblivious GLB.
-
-The environmental impact of our new model is significant. \carbondioxide{} emissions are reduced even even when firms' optimizations do not consider the environmental externality of \carbondioxide{} emissions. Environmental benefits could be even greater if firms are given incentives to be environmentally friendly.
 \end{frame}
+
+\begin{frame}{}
+
+\vspace{-3mm}
+\begin{block}{\carbondioxide{} emission}
+\vspace{-3mm}
+$$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
+Emissions rate $\eta_i$ per kW$\cdot{}$h varies across states based on energy-source composition.  %estimates available from \cite{carbon}.
+\end{block}
+
+
+%\begin{frame}{}
+%\begin{block}{Storage ***** Eric, pls edit as you see fit *********}
+%DC can store energy (batteries, supercapacitors, flywheels).
+
+%Electricity storage at time $t$ is $0 \leq es_i(t) \leq ES_i$. 
+
+%$ES_i$ = maximum storage capacity.  Storage rate is
+%$$e_i(t) = \rho \cdot (es_i(t) - es_i(t+1))$$
+%Positive $e_i(t)$ means discharging, negative charging. 
+
+%Assume $\rho = 1$, charging or discharging efficiency is perfect.
+
+%Energy cost with storage is
+%\begin{equation}
+%p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+
+%\end{equation}
+%\end{block}
+%\end{frame}
 
 \begin{frame}{GLB versus Storage}
 
@@ -600,25 +764,8 @@ The environmental impact of our new model is significant. \carbondioxide{} emiss
 \epsfig{file=brown_storage.pdf, height=2.2in, width=3.2in}
 \caption{Comparison of brown energy usage of the storage model and the Cooling-aware GLB model.}
 \end{figure}
-One alternative way of using renewable energy efficiently is to store the extra renewables at some moments for future use. Whereas applying geographical load balancing adjusts energy demand according to supply in each location, adding energy storage adjusts supply according to demand. We are interested in the performance characteristics of both methods. In this experiment, we compare the cost curve and the brown energy usage curve of using GLB and using storage. Since our experiment starts at midnight, the time when the data centers are likely to have used all of its storage for batch jobs \cite{adam:cooling}, we assume that the storage starts empty.
-
-Figure 5 illustrates the trend of optimal costs of these models with respect to varying renewable availability. It shows that Cooling-aware GLB has lower costs when the total renewable energy is less than 1.5 times the aggregate IT demand, and the storage model is better when renewable energy is in large surplus.
-
-Figure 6 compares brown energy under each model. The result suggests that the Cooling-aware GLB model needs less energy from the grid compared to the 6-hour-storage curve when the total renewable supply is less than 1.5 times of the total IT power demand. Moreover, it needs less grid energy than the total renewable energy compared to the 3-hour-storage model, in almost the entire renewable availability interval, except when the renewable availability coefficient is 0.5. The environmental impact advantage of our new model is even more salient than to the cost advantage.
-
-We thus can conclude that our model is better than the storage model when the renewable generation facilities are not yet built, because it requires less prior infrastructure investment.
 \end{frame}
 
-\section{Future work}
-\begin{frame}{Future work}
-Our simulation and visualization software can be used to answer questions about extensions to the model that would be useful when putting it into practice, such as—
-\begin{itemize}
-\item incorporating other kinds of renewables into the model
-\item treating data centers as endogenous. In the long run, where should we build new data centers, and what local renewables and energy storage systems do we use?
-\item finding the optimal control timescale. It is costly to switch servers on and off, so the current algorithms only change routing every fixed period, which is suboptimal. This significantly restricts the savings that follow-the-renewables routing can yield, but the topic hasn’t yet been explored deeply. Being able to simulate the whole system helps for this.
-\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the internet, one might expect solar power to dominate. But Wierman’s paper showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night you are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
-\end{itemize}
 
-\end{frame}
 
 \end{document}
