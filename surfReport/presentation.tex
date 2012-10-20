@@ -513,64 +513,64 @@ Visualization:
 
 \end{frame}
 
-\begin{frame}{Graphical representation details, Speaker Notes}
-
-	\begin{block}{Background map of the 48 contiguous United States}
-		\begin{itemize} 
-		%Obtained from Wikimedia Commons. \\
-	\item 	Points on map correspond to real-world $(latitude, longitude)$ coordinates according to a mathematical transformation specified with map. 
-	\item 	Allows drawing physical locations at correct positions on map.
-		\end{itemize}
-	\end{block}
-\vspace{-3mm}
-	\begin{block}{Visualization's three components}
-	Animation of dynamic status of the GLB system. \\
-	Line plot of aggregate statistics of energy supply and demand. \\  
-	Progress bar allows progress scroll and control.
-	\end{block}
-\end{frame}
-
-\begin{frame}{Graphical representation details, Speaker notes contd.}
-	\begin{block}{Features}
-	Animation displays 10 data centers on base map of United States. \\
-	Sector diagram represents each DC's status, which is animated over time. \\
-	Circle's left half is DC's energy demand: 
-		\begin{itemize}
-		\item{\textcolor{yellow}{\contour{black}{Yellow sector = energy demand for processing the request}}}
-		\item{\textcolor{blue}{Blue sector = energy demand for cooling} }
-		\end{itemize}
-	Circle's right half is energy supply: 
-		\begin{itemize}
-		\item{\textcolor{green}{\contour{black}{Light green sector = available wind energy}}}
-		\item{\textcolor{dgreen}{Dark green sector = available solar energy}}
-		\item{\textcolor{brown}{Brown sector = energy usage from the grid}}
-		\end{itemize} 
-           \end{block} 
-\end{frame}
-
-\begin{frame}{Graphical representation details, Speaker notes, contd.}
-
-	Area of sector $\propto$ amount of energy (so radius $\propto$ to $\sqrt{}$). \\ 
-	Faint circle surrounding sector diagram represents maximum energy usage when DC operates at full load. \\
-	Request traffic $\lambda_{d,s}(t)$ represented by lines connecting each source $s$ and destination data center $d$. \\
-	Line width linearly $\propto$ $L_s(t)$, total volume of requests from $s$. \\
-	Line transparency linearly $\propto$ ${\lambda_{d,s}(t)} / {L_s(t)}$, percentage of traffic from source $s$ routed to DC.  \\
-	Solid black line means all requests from $s$ are sent to $d$. \\
-	Fully transparent line means no traffic routed from $s$ to $d$.
-\end{frame}
-
-\begin{frame}{Graphical representation details, Speaker notes, contd.}
-	Line plot displays four aggregate statistics of interest over time: 
-	\begin{itemize}
-	\item{\textcolor{yellow}{\contour{black}{Yellow line = aggregate IT power}}}
-	\item{\textcolor{blue}{Blue line = aggregate energy usage on cooling}}
-	\item{\textcolor{green}{\contour{black}{Light green line = aggregate wind energy available}}}
-	\item{\textcolor{dgreen}{Dark green line = aggregate solar energy available}.}
-	\end{itemize}
-	Bottom progress indicates time elapsed in animation. \\
-	User can pause/resume animation and seek to desired time.\\
-	Point out times when requests are being routed to more distant DCs that have available renewables.
-\end{frame}
+% \begin{frame}{Graphical representation details, Speaker Notes}
+% 
+% 	\begin{block}{Background map of the 48 contiguous United States}
+% 		\begin{itemize} 
+% 		%Obtained from Wikimedia Commons. \\
+% 	\item 	Points on map correspond to real-world $(latitude, longitude)$ coordinates according to a mathematical transformation specified with map. 
+% 	\item 	Allows drawing physical locations at correct positions on map.
+% 		\end{itemize}
+% 	\end{block}
+% \vspace{-3mm}
+% 	\begin{block}{Visualization's three components}
+% 	Animation of dynamic status of the GLB system. \\
+% 	Line plot of aggregate statistics of energy supply and demand. \\  
+% 	Progress bar allows progress scroll and control.
+% 	\end{block}
+% \end{frame}
+% 
+% \begin{frame}{Graphical representation details, Speaker notes contd.}
+% 	\begin{block}{Features}
+% 	Animation displays 10 data centers on base map of United States. \\
+% 	Sector diagram represents each DC's status, which is animated over time. \\
+% 	Circle's left half is DC's energy demand: 
+% 		\begin{itemize}
+% 		\item{\textcolor{yellow}{\contour{black}{Yellow sector = energy demand for processing the request}}}
+% 		\item{\textcolor{blue}{Blue sector = energy demand for cooling} }
+% 		\end{itemize}
+% 	Circle's right half is energy supply: 
+% 		\begin{itemize}
+% 		\item{\textcolor{green}{\contour{black}{Light green sector = available wind energy}}}
+% 		\item{\textcolor{dgreen}{Dark green sector = available solar energy}}
+% 		\item{\textcolor{brown}{Brown sector = energy usage from the grid}}
+% 		\end{itemize} 
+%            \end{block} 
+% \end{frame}
+% 
+% \begin{frame}{Graphical representation details, Speaker notes, contd.}
+% 
+% 	Area of sector $\propto$ amount of energy (so radius $\propto$ to $\sqrt{}$). \\ 
+% 	Faint circle surrounding sector diagram represents maximum energy usage when DC operates at full load. \\
+% 	Request traffic $\lambda_{d,s}(t)$ represented by lines connecting each source $s$ and destination data center $d$. \\
+% 	Line width linearly $\propto$ $L_s(t)$, total volume of requests from $s$. \\
+% 	Line transparency linearly $\propto$ ${\lambda_{d,s}(t)} / {L_s(t)}$, percentage of traffic from source $s$ routed to DC.  \\
+% 	Solid black line means all requests from $s$ are sent to $d$. \\
+% 	Fully transparent line means no traffic routed from $s$ to $d$.
+% \end{frame}
+% 
+% \begin{frame}{Graphical representation details, Speaker notes, contd.}
+% 	Line plot displays four aggregate statistics of interest over time: 
+% 	\begin{itemize}
+% 	\item{\textcolor{yellow}{\contour{black}{Yellow line = aggregate IT power}}}
+% 	\item{\textcolor{blue}{Blue line = aggregate energy usage on cooling}}
+% 	\item{\textcolor{green}{\contour{black}{Light green line = aggregate wind energy available}}}
+% 	\item{\textcolor{dgreen}{Dark green line = aggregate solar energy available}.}
+% 	\end{itemize}
+% 	Bottom progress indicates time elapsed in animation. \\
+% 	User can pause/resume animation and seek to desired time.\\
+% 	Point out times when requests are being routed to more distant DCs that have available renewables.
+% \end{frame}
 
 
 \section{Testing effectiveness of results}
