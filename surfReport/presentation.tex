@@ -68,6 +68,7 @@
 
 \section{Introduction}
 
+\subsection{Motivation}
 \begin{frame}{Motivation}
 	\begin{block}{Vast, high-growth energy use by data centers.}
 		\includegraphics[height=2in]{datacenter.jpg}
@@ -140,6 +141,7 @@
 	\end{block}
 \end{frame}
 
+\subsection{Our approach: Geographical Load Balancing}
 \begin{frame}{Our approach: Geographical Load Balancing}
 	% Notice that in this illustration, user in OK is a bit closer to IL dc, so we route there.
 	\begin{figure}
@@ -161,6 +163,8 @@
 	\end{figure}
 \end{frame}
 
+\subsection{Summary of our project}
+\newcommand{\summaryframe}{
 \begin{frame}{Summary of our project}
 
 	\begin{block}{Research goal}  
@@ -184,7 +188,9 @@
 	\end{block}
 
 \end{frame}
+}\summaryframe
 
+\subsection{The cooling-aware GLB model}
 \begin{frame}{The cooling-aware GLB model}
 
 		\begin{itemize}
@@ -227,7 +233,7 @@
 
 \end{frame}
 
-\section{Setup}
+\section{Model setup}
 
 \begin{frame}{Model setup}
 
@@ -441,7 +447,7 @@ model to include cooling costs.
 \end{frame}
 
 \section{Visualization}
-\begin{frame}{Motivation for Visualization}
+\begin{frame}{Motivation for visualization}
 Numerical simulation result is very large time series describing routing plans and data center activity. \\
 \vspace{2mm}
 Hard to interpret large quantity of data in matrix form. \\
@@ -592,8 +598,10 @@ Visualization:
 \includegraphics[scale = 0.5]{brown_storage.pdf}
 \end{block}
 \end{frame}
-%
-%
+
+
+
+\section{Future work}
 %\begin{frame}
 %\frametitle{Future Work}
 %\begin{block}
@@ -614,6 +622,8 @@ Visualization:
 %\end{itemize}
 %\end{block}
 %\end{frame}
+
+\summaryframe
 
 \begin{frame}{Future work}
 
