@@ -408,7 +408,7 @@ model to include cooling costs.
 	&&& \mathrlap{{} + \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}} \lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right)} \\
 	&&& \mathrlap{{} + \beta \cdot (x_i(t+1) - x_i(t))^+} \\
 \\
-&\text{subject to}
+&\text{\textcolor{blue}{subject to}}
 	&& \sum_{i\in \mathcal{N}}\lambda_{ij}(t) = L_j(t), &\forall j\in J \\
 	&&& \lambda_{ij} \geq 0, & \forall i\in N, j\in J \\
 	&&& 0 \leq x_i(t) \leq X_i, & \forall i \in N \\
@@ -434,7 +434,7 @@ model to include cooling costs.
 %\end{frame}
 %\begin{frame}{}
 
-	\begin{block}{Boundary conditions model real-world constraints:}
+	\begin{block}{\textcolor{blue}{Boundary conditions model real-world constraints:}}
 	\begin{itemize}
 	\item
 	GLB system processes all requests. Each DC gets $>0$ work.
