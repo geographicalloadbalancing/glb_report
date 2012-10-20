@@ -442,6 +442,13 @@ subject to
 	\end{block}
 \end{frame}
 
+\begin{frame}{Modeling the carbon emission}
+
+After we find the optimal solution based on cost, we want to know how much the \carbondioxide{} emission is. This can be represented as 
+	$$\sum_{i \in \mathcal{N}} \eta_i \cdot (x_i(t) + c(x_i(t)) - r_i(t) - e_i(t))^+$$
+where $\eta_i$ be the rate of carbon emission per kW/h at data center $i$.
+\end{frame}
+
 \section{Visualization}
 \begin{frame}{Motivation for Visualization}
 Numerical simulation result is very large time series describing routing plans and data center activity. \\
@@ -553,8 +560,17 @@ Visualization:
 \begin{frame}
 \frametitle{Experiment Result}
 \begin{block}
-{Cost saving}
-\includegraphics[scale = 0.37]{cost_comparison.pdf}
+{We want to explore}
+\begin{itemize}
+\item
+How much is the cost saving using cooling aware GLB? 
+\item
+Does this result hold in all seasons?
+\item
+How much carbon emission are we cutting?
+\item
+Is our model better than its alternative, using storage for electricity?
+\end{itemize}
 \end{block}
 \end{frame}
 %
@@ -562,8 +578,35 @@ Visualization:
 \begin{frame}
 \frametitle{Experiment Result}
 \begin{block}
-{Seasonality}
-\includegraphics[scale = 0.5]{cost_diff.pdf}
+{Cost saving}
+\includegraphics[scale = 0.37]{cost_comparison.pdf}
+\end{block}
+\begin{block}
+{Observation}
+\begin{itemize}
+\item
+Using cooling aware GLB model causes less cost than using both the old GLB and the LOCAL.
+\item
+The cost edge compared to the old GLB is evident when aggregate renewable supply is in the reasonable range. 
+\end{itemize}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{The effect of seasonality}
+\includegraphics[scale = 0.38]{cost_diff.pdf}
+\end{block}
+\begin{block}
+{Observation}
+\begin{itemize}
+\item
+The cost difference between in winter and in summer is significantly reduced if we have enough renewable supply. The renewable supply doesn't have to be in vast surplus.
+\item
+The cost saving effect is robust against seasonality.
+\end{itemize}
 \end{block}
 \end{frame}
 %
@@ -572,7 +615,16 @@ Visualization:
 \frametitle{Experiment Result}
 \begin{block}
 {Carbon Emission}
-\includegraphics[scale = 0.5]{carbon_summer.pdf}
+\includegraphics[scale = 0.38]{carbon_summer.pdf}
+\end{block}
+\begin{block}
+{Observation}
+\begin{itemize}
+\item
+The carbon emission saving is much more significant than the cost saving
+\item
+Achieving such effect also only requires reasonable amount of renewables.
+\end{itemize}
 \end{block}
 \end{frame}
 %
@@ -580,8 +632,14 @@ Visualization:
 \begin{frame}
 \frametitle{Experiment Result}
 \begin{block}
-{vs Storage}
-\includegraphics[scale = 0.5]{cost_storage.pdf}
+{GLB vs Storage}
+We want to compare the performance of cooling aware GLB and storage model in both economic and environmental aspect.
+\begin{itemize}
+\item
+We compare both the \emph{cost} and the \emph{brown energy} usage.
+\item
+A set of benchmarks of different storage capacity is chosen to fully represent the power of storage model.
+\end{itemize}
 \end{block}
 \end{frame}
 %
@@ -589,9 +647,61 @@ Visualization:
 \begin{frame}
 \frametitle{Experiment Result}
 \begin{block}
-{vs Storage}
-\includegraphics[scale = 0.5]{brown_storage.pdf}
+{GLB vs Storage on cost}
+\includegraphics[scale = 0.38]{cost_storage.pdf}
 \end{block}
+\begin{block}
+{Observation}
+\begin{itemize}
+\item
+GLB initially has cost advantage when renewable supply is not in vast surplus.
+\item
+Storage model catches up when the renewable energy supply is large.
+\end{itemize}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Experiment Result}
+\begin{block}
+{GLB vs Storage on brown energy usage}
+\includegraphics[scale = 0.38]{brown_storage.pdf}
+\end{block}
+\begin{block}
+{Observation}
+\begin{itemize}
+\item
+GLB is better than the storage when the renewable supply is in $[1, 1.5]$ times of the demand. 
+\item
+GLB in general is able to achieve similar result to the storage model with much less prior investment.
+\end{itemize}
+\end{block}
+\end{frame}
+%
+%
+\begin{frame}{Summary of our project}
+
+	\begin{block}{Research goal}  
+	Develop software to show how geographical load balancing (GLB) improves data center (DC) efficient use of renewable energy.  
+	\end{block}
+	
+	\begin{block}{Issue} 
+	Minimize DC electricity cost over time by convex optimization over real workload inputs - temp, solar, \& wind traces.
+	\end{block}
+
+	\begin{block}{Our contributions} 
+	\begin{itemize}
+		\item{Visualization \\ 
+		Animation of 10 DCs' demand and usage of energy (grid \& renewable energy generation) in 48 contiguous U.S. states}
+		\item{Test effectiveness of, and refine, routing algorithms using visualization}
+		\item{Cooling-aware GLB model \\
+			Uses locally available renewable energy more effectively \\
+			Reduces electricity grid usage despite weather shifts\\
+			Potentially uses renewables almost exclusively}
+	\end{itemize} 
+	\end{block}
+
 \end{frame}
 %
 %
