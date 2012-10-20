@@ -138,7 +138,7 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 \end{frame}
 
 \begin{frame}{Our approach: Geographical Load Balancing}
-	% Talk about how a request could be routed either to the nearest DC, or to the one that has available green energy. Explain concept of GLB 
+	% Notice that in this illustration, user in OK is a bit closer to IL dc, so we route there.
 	\begin{figure}
 		\caption{\textbf{\textcolor{brown}{Traditional routing}}: route request to nearest DC, which minimizes latency}
 		\centering
@@ -146,16 +146,17 @@ The Green Data Center Market Will Grow from \$17.6 Billion to \$45 Billion by 20
 	\end{figure}
 \end{frame}
 \begin{frame}{Our approach: Geographical Load Balancing}
-	% Talk about how a request could be routed either to the nearest DC, or to the one that has available green energy. Explain concept of GLB 
+	% Created by Prof. Wierman's group
+	% Now, it's sunny at the CA data center but cloudy at the one in IL. So route to CA, where solar power is available.
+	% GLB routes requests from a population center to a data center by trading off latency with green energy use.
+	% It's a good deal if Google can halve their grid energy usage for a few milliseconds more latency per Google search.
+	% Balances advantage of green energy vs. cost of higher latency
 	\begin{figure}
-		\caption{\textbf{\textcolor{dgreen}{GLB}}: trade off latency with green energy use; prefer routing to DCs that currently have renewables available}
+		\caption{\textbf{\textcolor{dgreen}{GLB}} (Liu et al., 2011): prefer routing to DCs that currently have renewables available}
 		\centering
 		\epsfig{file=svg/nearestrouting.pdf, height=2.3in}
 	\end{figure}
 \end{frame}
-
-GLB routes requests from a population center to a data center by trading off latency with green energy use. 
-
 
 \begin{frame}{Summary of our project}
 
