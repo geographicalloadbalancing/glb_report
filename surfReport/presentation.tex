@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{mathtools}
 
 \usecolortheme[named=dgreen]{structure}
  \setbeamertemplate{footline}[page number]
@@ -396,20 +397,18 @@ model to include cooling costs.
 \begin{frame}{Minimize total costs using convex optimization}
 
 \begin{align*}
-\min_{\bf{x}(t), \bf{\lambda}(t)} & \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ \\
-& + \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}}
-\lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) \\
-& + \beta \cdot (x_i(t+1) - x_i(t))^+
-\end{align*}
-\vspace{-2mm}
-subject to
-\begin{align*}
-& \sum_{i\in \mathcal{N}}\lambda_{ij}(t) = L_j(t), &\forall j\in J \\
-& \lambda_{ij} \geq 0, & \forall i\in N, j\in J \\
-& 0 \leq x_i(t) \leq X_i, & \forall i \in N \\
-& \lambda_i(t) \leq x_i(t) \cdot \mu_i & \forall i \in N \\
-& 0 \leq es_i(t) \leq ES_i & \forall i \in N \\
-& e_i(t) = es_i(t) - es_i(t+1) & \forall i \in N
+&\underset{\bf{x}(t), \bf{\lambda}(t)}{\text{minimize}} & \hspace{0.5em}
+	& \mathrlap{\sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+} \\
+	&&& \mathrlap{{} + \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}} \lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right)} \\
+	&&& \mathrlap{{} + \beta \cdot (x_i(t+1) - x_i(t))^+} \\
+\\
+&\text{subject to}
+	&& \sum_{i\in \mathcal{N}}\lambda_{ij}(t) = L_j(t), &\forall j\in J \\
+	&&& \lambda_{ij} \geq 0, & \forall i\in N, j\in J \\
+	&&& 0 \leq x_i(t) \leq X_i, & \forall i \in N \\
+	&&& \lambda_i(t) \leq x_i(t) \cdot \mu_i & \forall i \in N \\
+	&&& 0 \leq es_i(t) \leq ES_i & \forall i \in N \\
+	&&& e_i(t) = es_i(t) - es_i(t+1) & \forall i \in N
 \end{align*}
 
 \end{frame}
@@ -417,11 +416,10 @@ subject to
 \begin{frame}{Minimize total costs using convex optimization}
 
 \begin{align*}
-\min_{\bf{x}(t), \bf{\lambda}(t)} 
-& \overbrace{ \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ }^{\bf \textcolor{red}{Energy \ Cost}} \\
-& + \overbrace{ \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}} 
-\lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) }^{\bf \textcolor{red}{Delay \ Cost}}  \\
-& + \overbrace{ \beta \cdot (x_i(t+1) - x_i(t))^+ }^{\bf \textcolor{red}{Switching Cost}}
+&\underset{\bf{x}(t), \bf{\lambda}(t)}{\text{minimize}} & \hspace{0.5em}
+	& \overbrace{ \sum_{i \in \mathcal{N}} p_i \cdot (l(x_i(t)) + c(x_i(t)) - r_i(t) - e_i(t))^+ }^{\text{\textbf{\textcolor{red}{energy cost}}}} \\
+	&&& {} + \overbrace{ \sum_{j \in \mathcal{J}}\sum_{i \in \mathcal{N}} \lambda_{ij}(t)\left(\frac{1}{\mu_i - \lambda_i(t)/x_i(t)} + d_{ij}\right) }^{\text{\textbf{\textcolor{red}{delay cost}}}}  \\
+	&&& {} + \overbrace{ \beta \cdot (x_i(t+1) - x_i(t))^+ }^{\text{\textbf{\textcolor{red}{switching cost}}}}
 \end{align*}
 \vspace{-2mm}
 
