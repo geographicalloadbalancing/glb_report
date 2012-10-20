@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{mathtools}
+\usepackage[outline]{contour}
 
 \usecolortheme[named=dgreen]{structure}
  \setbeamertemplate{footline}[page number]
@@ -301,28 +302,31 @@ model to include cooling costs.
 	\begin{description}
 		\item[Optimization problem:] Choose routing plan and \# active servers to minimize total cost (= delay cost + switching cost + energy cost).
 	\end{description}
-	\begin{block}{Delay cost}
+	% Use \only to collapse sections so that everything fits.
+	\begin{block}{Delay cost}\only<1>{
 		Business cost of request latency (distance traveled, queuing delay at DC)
 		\begin{itemize} \item Calculated using a sharing queue model. \end{itemize}
 		% Total load $\lambda_i(t)=\sum_j \lambda_{ij}(t)$ distributed evenly across $x_i(t)$ homogeneous servers of service rate \mbox{$\mu_i$ = $0.1 /
 		%  \mathrm{ms}$}.
-	\end{block}
-	\begin{block}{Switching cost}
+	}\end{block}
+	\vspace{-3mm}
+	\begin{block}{Switching cost}\only<1>{
 		Delay, wear-and-tear cost from powering servers on/off. %DC workload updated every 10 mins. 
 		% Switching cost weight $\beta = 6$.$$\beta \cdot (x_i(t+1) - x_i(t))^+$$
-	\end{block}
-	\begin{block}{Energy cost}
+	}\end{block}
+	\vspace{-3mm}
+	\begin{block}{Energy cost}\only<2>{
 		Cost of the energy used to power the DC.
 		\begin{itemize}
 			\item Demand
 			\begin{description}
+				\item[\textcolor{yellow}{\contour{black}{IT cost}}] running active servers (CPU, disk, ...)
 				\item[\textcolor{blue}{cooling}]
-				\item[IT cost] running active servers
 			\end{description}
 			\item Supply
 			\begin{description}
-				\item[renewable energy] free
-				\item[grid energy] depends on market price in each state, amount used
+				\item[\textcolor{green}{\contour{black}{renewable}}] free
+				\item[\textcolor{brown}{grid}] depends on market price in each state, amount used
 			\end{description}
 		\end{itemize}
 		% \begin{equation}
@@ -333,7 +337,9 @@ model to include cooling costs.
 		%$l(x_i(t))$ = linear function of energy consumption, %of active servers or IT demand in time interval 
 		%$c(x_i(t))$ = energy usage for cooling, $r_i(t)$ = renewable energy availability, 
 		%$p_i$  = constant real statistic for each state. 
-	\end{block}
+	}\end{block}
+	\vspace{-3mm}
+	\pause % Make Beamer generate 2 slides
 \end{frame}
 
 \begin{frame}{\textcolor{blue}{Cooling costs}}
