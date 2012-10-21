@@ -169,13 +169,15 @@ The cooling optimization model finds the minimum energy consumption required to 
 
 The energy consumption of air cooling is
 \begin{equation}
-c_a(x) = k \cdot x^3, 0 \leq x \leq \bar{x}, k > 0
+c_a(x) = k \cdot x_a^3, 0 \leq x_a \leq \bar{x}, k > 0
 \end{equation}
 The parameter $k$ is proportional to the temperature gradient between the inside and outside air. The parameter $\bar{x}$ corresponds to the maximum number of the servers that can be cooled by air cooling alone. The cap $\bar{x}$ is proportional to both the temperature gradient and the maximum air flow rate. In our simulation, the air flow rate is set such that when the outside temperature is $20^{\circ}\mathrm{C}$ lower than $T$, the data center can rely on air cooling entirely at full workload.
 
-On the other hand, the energy consumption of chilled-water cooling is empirically roughly linear in the IT demand empirically, so we model it as
+On the other hand, the energy consumption of chilled-water cooling is
+empirically roughly linear in the IT demand empirically, so we model
+it as
 \begin{equation}
-c_c(x) = \gamma \cdot x
+c_c(x) = \gamma \cdot x_c
 \end{equation}
 %Here $\gamma = 0.17$, meaning that the chiller takes 0.17kW/h electricity to cool the heat caused by 1kw/h of IT demand.
 
@@ -183,11 +185,11 @@ For notational convenience, define
 \begin{equation}
 	x^+ \eqdef \min(0, x)
 \end{equation}
-to be $x$ clamped to be positive.
+to be $x$ constrained to be positive.
 
 The optimal cooling portfolio is
 \begin{equation}
-c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_c)^+ + kx_2^3
+c(x) = \min_{x_c \in [0,x]} \gamma \cdot (x-x_a)^+ + kx_a^3
 \end{equation}
 which yields
 $$
