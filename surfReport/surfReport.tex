@@ -101,9 +101,9 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 		“Green” routing algorithms would benefit internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, as data centers are expected to use several percent of U.S. and world electricity output, and they currently use mostly non-renewable energy.
 		
 		\paragraph{Servers use energy to process requests}
-			Data centers require a substantial amount of energy, varying with load (requests processed per second).
+			Data centers require a substantial amount of energy, both for processing requests and for cooling. The energy the servers themselves use to process requests varies with load (requests processed per second).
 		\paragraph{Cooling also uses energy}
-			The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost
+			Data centers also spend a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost.
 	\subsubsection{Need for load balancing between DCs}
 		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency—without considering energy efficiency.
 	\subsubsection{Load, energy availability, grid electricity prices, etc. are time-varying and stochastic.}
@@ -120,6 +120,8 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 			Previous research suggests that under the geographical load balancing (GLB) model, the system of data centers can even operate almost entirely on renewable energy, without undue increase in latency \cite{adam:GLB}.
 		\paragraph{Convex optimization framework; solve numerically}
 			Our simulation models the whole data center routing system, using real-world data on wind and solar power output, grid electricity prices, and internet request volume over time at various locations (the 48 contiguous U.S. states and 10 data center locations). The simulation is implemented as a convex optimization problem, solved numerically, whose solution is an allocation of requests to data centers.
+		
+		@@@@@The previous GLB model only considers the energy cost of running the servers. But in reality, a data center spends a considerable amount of energy on cooling
 
 
 \subsection{Visualization}
