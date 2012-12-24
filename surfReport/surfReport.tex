@@ -144,14 +144,14 @@ Second, the Cooling-aware GLB model can allow significantly reduced carbon emiss
 Third, considering cooling yields a larger benefit than adding energy storage, both in total cost and in carbon emissions, provided that the aggregate renewable supply is enough to power the data centers, yet not in vast surplus. We obtain this result by systematically comparing the Cooling-aware GLB system with storage systems of various capacities. We conclude that Cooling-aware GLB has a clear advantage over the storage model when the renewable energy generation and storage facilities are not widely established; it requires much less investment in infrastructure and hence can be implemented more easily.
 
 \section{Setup}
-We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using convex optimization technique as proved in \cite{adam:GLBfull}.
+We assume that each data center has a cooling system described in \cite{adam:cooling}, and then modify the model in \cite{adam:GLB} to include energy cost of cooling. The model can be solved using a convex optimization technique, as in \cite{adam:GLBfull}.
 \subsection{The workload}
-Let $J$ be the set of sources of requests. Each of 48 U.S. states is modeled as having a source of web requests located at its geographical center. The request volume is $L_j(t)$, the mean arrival rate from source $j \in J$ at time interval $t$. $L_j(t)$ is estimated using real-world traces. The base trend of the workload is taken from a trace at Hewlett-Packard Labs, then the workload of each request source is scaled proportionately to the population of the state, following by a shift along the time dimension according to the timezone.
+Let $J$ be the set of sources of requests. Each of 48 U.S. states is modeled as having a source of web requests located at its geographical center. The request volume is $L_j(t)$, the mean arrival rate from source $j \in J$ at time interval $t$. $L_j(t)$ is estimated using real-world traces. The workload for each source is based on a trace at Hewlett-Packard Labs, scaled by the population of the state, and temporally shifted according to time zone.
 
 \subsection{The availability of renewable energy}
-We have three major considerations when modeling the availability of renewable energy:
+There are three major considerations when modeling the availability of renewable energy:
 
-First, the weather at the data centers is crucial, as it determines the renewable energy output. We use real traces of wind speed and insolation obtained from \cite{renew1} \cite{renew2}.
+First, the weather at the data centers is crucial, as it determines the renewable energy output. We use real traces of wind speed and insolation obtained from \cite{renew1} and \cite{renew2}.
 %@@@@@@[Is this true? I thought the traces were (calculated) power output.]
 The measurements have a granularity of 10 minutes. The rate of renewable energy generation per plant unit at each data center is then set to be proportional to the weather data respectively.
 
