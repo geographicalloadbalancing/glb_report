@@ -151,9 +151,7 @@ Let $J$ be the set of sources of requests. Each of 48 U.S. states is modeled as 
 \subsection{The availability of renewable energy}
 There are three major considerations when modeling the availability of renewable energy:
 
-First, the weather at the data centers is crucial, as it determines the renewable energy output. We use real traces of wind speed and insolation obtained from \cite{renew1} and \cite{renew2}.
-%@@@@@@[Is this true? I thought the traces were (calculated) power output.]
-The measurements have a granularity of 10 minutes. The rate of renewable energy generation per plant unit at each data center is then set to be proportional to the weather data respectively.
+First, the weather at the data centers is crucial, as it determines the renewable energy output. We use real traces of wind speed and insolation obtained from \cite{renew1} and \cite{renew2}; power output at each data center is proportional to the corresponding weather variable. The measurements have a granularity of 10 minutes.
 
 Second, the size of the renewable energy plant matters. We scale the renewable generation capacity such that the total renewable energy is $c$ times as much as the total energy demand to process all requests. In our simulation, $c$ varies in $[0.5, 4]$ with a step length of $0.5$.
 
