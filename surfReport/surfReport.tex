@@ -92,22 +92,36 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 
 \section{Introduction}
 
-\subsection{@@@}
-@@@ Readhead: Add paragraph explaining what DCs are. Internet companies such as Google use data centers to service users’ requests (such as Google searches). Service Internet requests such as Google searches. Company that runs the system of DCs wants to minimize cost from purchasing electricity etc..
+\subsection{Data centers}
 
-@@@ Quote numbers. Statistics for how many DCs there are, how much it costs to cool them, etc.
+
+
+
 
 \subsection{The problem}
 	\subsubsection{Energy cost is important for DCs.}
+		Internet companies such as Google use data centers (DCs) to service users’ requests (such as Google searches). Each data center contains the computer servers (including processors to calculate stuff and disks to store and retrieve user data) that service the requests, along with the infrastructure needed to support their operation (power supply, cooling, networking).
+		@@@ number of data centers? Size of a data center.
+		
+		\paragraph{Servers use energy to process requests}
+			Data centers require a substantial amount of energy, both for processing requests and for cooling. The energy the servers themselves use to process requests varies with load (requests processed per second).
+			
+			@@@ statistics on energy usage
+			
+		\paragraph{Cooling also uses energy}
+			Data centers also spend a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost, by routing requests to where cooling is currently cheap.
+			
+			@@@ statistics on cooling costs?
+		
+@@@ Readhead: Add paragraph explaining what DCs are. Company that runs the system of DCs wants to minimize cost from purchasing electricity etc..
+@@@ Quote numbers. Statistics for how many DCs there are, how much it costs to cool them, etc.
+		
 		Building cost-saving and environmentally-friendly data centers has become a pressing challenge for the ICT industry.
 		Energy consumption accounts for much of a data center’s running cost \cite{datacenter}, and the carbon dioxide emissions consequent to data centers’ grid energy usage concerns society at large.
 		As the need for data centers grows rapidly,
 		“green” routing algorithms would benefit internet companies by reducing their electricity costs, and everyone else by reducing pollution from non-renewable energy. The social benefit could be substantial, as data centers are expected to use several percent of U.S. and world electricity output, and they currently use mostly non-renewable energy.
 		
-		\paragraph{Servers use energy to process requests}
-			Data centers require a substantial amount of energy, both for processing requests and for cooling. The energy the servers themselves use to process requests varies with load (requests processed per second).
-		\paragraph{Cooling also uses energy}
-			Data centers also spend a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost, by routing requests to where cooling is currently cheap.
+
 	\subsubsection{Load balancing between DCs}
 		@@@@@ Move to earlier since preceding paragraphs depend on this?
 		There are often several redundant data centers, each of which can process a user request, such as a Google search. Traditionally, a request would be routed to the geographically-nearest data center, thereby minimizing latency—without considering energy efficiency.
