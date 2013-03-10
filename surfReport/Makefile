@@ -5,6 +5,8 @@ report : surfReport.tex
 	bibtex surfReport
 	pdflatex surfReport.tex
 	pdflatex surfReport.tex
+	bash -c 'rm surfReport{.aux,.bbl,.blg,.log,-blx.bib,.bcf,.run.xml}'
+
 
 report_display : report
 	xdg-open surfReport.pdf

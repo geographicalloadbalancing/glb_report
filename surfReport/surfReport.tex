@@ -30,6 +30,9 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{biblatex}
+\bibliography{surfReport}
+
 \newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
 \newcommand{\eqdef}{\ensuremath{\overset{\mathrm{def}}{=}}}
 
@@ -389,6 +392,6 @@ Our simulation and visualization software can be used to answer questions about 
 \item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the internet, one might expect solar power to dominate. But Wierman’s paper @@@@[which] showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night DCs are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
 \end{itemize}
 
-\bibliographystyle{abbrv}
-\bibliography{surfReport}
+\printbibliography
+
 \end{document}
