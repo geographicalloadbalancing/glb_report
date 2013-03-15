@@ -108,7 +108,7 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 			Computing companies purchase much of this electricity off the grid. As energy usage is often the largest contributor to cost for running a data center, reducing it would save large amounts of money. Further, the electrical grid provides mainly “brown” energy, which causes pollution; DCs were estimated to have contributed $0.5\%$ of U.S. greenhouse gas emissions in 2007 \cite{wikipedia:dcgreenhouse}.
 		
 		\paragraph{Cooling also uses energy}
-			Data centers also spend a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations. [@@@@ belongs later, after GLB concept is introduced?[Thus we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost, by routing requests to where cooling is currently cheap.]]
+			Data centers also spend a considerable amount of energy on cooling \cite{datacenter}, especially in summer. The energy needed for cooling largely depends on the weather at data center locations.
 			
 			%@@@ statistics on cooling costs?
 
@@ -149,7 +149,9 @@ We develop a visualization that displays the demand from each of the 48 contiguo
 We implement a comprehensible visualization of the multi-dimensional simulation input and output data. The visualization makes it easier to see what each optimization algorithm is doing, so it can be used to test effectiveness of and refine routing algorithms. This will help with developing an implementable algorithm / system for routing internet requests that allows data centers to operate using almost exclusively renewable energy.
 
 \subsection{Cooling-aware GLB}
-The previous GLB model (\cite{adam:GLB}) only considers the energy cost of running the servers themselves. But in reality, a data center expends a considerable amount of energy to dissipate the heat the servers produce. We provide a new geographical load balancing model which considers the energy cost of cooling, and show that it can reduce the total cost significantly compared to previous models. This improvement in green energy usage leads to much lower carbon emissions.
+The previous GLB model (\cite{adam:GLB}) only considers the energy cost of running the servers themselves. But in reality, a data center expends a considerable amount of energy to dissipate the heat the servers produce.
+
+The GLB concept also applies to cooling. That is, we can also exploit the geographical heterogeneity of the data centers to reduce cooling cost, by routing requests to where cooling is currently cheap. We provide a new geographical load balancing model which considers the energy cost of cooling, and show that it can reduce the total cost significantly compared to previous models. This improvement in green energy usage leads to much lower carbon emissions.
 
 We set up an experiment to investigate the economic and environmental impact of using our new model. We use real traces of data center workload, renewable energy availability, and weather to numerically compute the optimal solution.% The cost model of the geographical load balancing system is analytically determined@@@@[what that mean lah].
 
