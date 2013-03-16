@@ -30,6 +30,8 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{hyperref}
+
 \usepackage{biblatex}
 \bibliography{surfReport}
 
@@ -223,9 +225,12 @@ To explore the effect of seasonality on the performance of the cooling model, we
 
 \begin{figure*}
 \centering
-\epsfig{file=visualization-bmp.pdf, height=3in, width=4.5in}
+\epsfig{file=visualization-bmp.pdf, width=6.8in}
 \caption{Screenshot of the visualization, running in the Chromium web browser.}
+
+The interactive visualization can be viewed at \url{http://geographicalloadbalancing.github.com/svgmap.xhtml}.
 \end{figure*}
+
 \subsubsection{Energy cost}
 The energy cost is the cost of both running active servers and keeping them at constant working temperature. The data centers pay no cost for renewable energy; we assume that each data center has dedicated renewable energy generation facilities that incurs zero maintenance cost. Thus the energy cost is for using energy from the grid and can be represented as
 \begin{equation}
