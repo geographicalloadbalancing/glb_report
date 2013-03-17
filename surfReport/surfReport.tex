@@ -31,11 +31,12 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{hyperref}
+\usepackage{chemformula}
 
 \usepackage{biblatex}
 \bibliography{surfReport}
 
-\newcommand{\carbondioxide}{\ensuremath{\mathrm{CO}_2}}
+\newcommand{\carbondioxide}{\ch{CO2}}
 \newcommand{\eqdef}{\ensuremath{\overset{\mathrm{def}}{=}}}
 
 \begin{document}
@@ -282,7 +283,7 @@ Each data center has a limited number of servers; it cannot process requests in 
 \item
 Each data center’s energy storage capacity is bounded between $0$ and a fixed cap.
 \end{enumerate}
-\subsubsection{\carbondioxide{} emission}
+\subsubsection{\carbondioxide{} emissions}
 The optimization thus far has the sole objective of minimizing the cost to the firm. But we also want to monitor the amount of \carbondioxide{} emitted as an externality. The emission of \carbondioxide{} arises from grid electricity use; the emissions rate per kW$\cdot{}$h varies across states, as each state has a different energy-source composition. An estimation of these rates can be found at \cite{carbon}.
 
 Letting $\eta_i$ be the rate of carbon emission per kW/h at data center $i$, the total \carbondioxide{} emission is then
