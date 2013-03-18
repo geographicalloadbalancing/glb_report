@@ -5,6 +5,10 @@
 \usepackage{hyperref}
 \usepackage{chemformula}
 
+% Multi-part figures
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{biblatex}
 \bibliography{surfReport}
 
@@ -200,10 +204,11 @@ To explore the effect of seasonality on the performance of the cooling model, we
 
 \begin{figure*}
 \centering
-\epsfig{file=visualization-bmp.pdf, width=6.8in}
+\epsfig{file=visualization-bmp.pdf, width=\textwidth}
 \caption{Screenshot of the visualization, running in the Chromium web browser.}
 
 The interactive visualization can be viewed at \url{http://geographicalloadbalancing.github.com/svgmap.xhtml}. The user may play or pause the animation using the button, and seek through the animation using the slider, at the bottom of the page.
+\label{fig:screenshot}
 \end{figure*}
 
 \subsubsection{Energy cost}
@@ -269,11 +274,6 @@ Separately, we compare the performance of our model to the storage model. Storag
 
 We will evaluate the outcomes based on 1) the total cost; 2) the grid (brown) energy usage; and 3) the \carbondioxide{} emissions.
 
-\begin{figure*}
-\centering
-\epsfig{file=cost_comparison.pdf, height=1.8in, width=7in}
-\caption{Comparison of optimal costs of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL, with varying renewable energy availability.}
-\end{figure*}
 \section{Visualization}
 Our numerical experiment generates time series describing routing plans and data center activity. Due to the large quantity of data, the output is hard to interpret when in matrix form. Therefore we developed a visualization tool to help us recognize the key characteristics of the optimal solution quickly. It also works as a simple check for the validity of the solution: we can spot obviously abnormal behaviors in the output.
 
@@ -303,19 +303,27 @@ The progress bar at the bottom indicates the time elapsed in the animation. The 
 \section{Results}
 \subsection{Cost savings from Cooling-aware GLB}
 
-\begin{figure}
-\centering
-\epsfig{file=cost_diff.pdf, height=2.2in, width=3.2in}
-\caption{The difference between optimal costs in summer/winter for both Cooling-aware and Cooling-oblivious GLB}
-\end{figure}
-
 The cooling-aware geographical load balancing model reduces firm’s energy cost by routing the requests to locations where energy is cheap and cooling is easy. Such a savings outweighs the increase in delay cost. Hence our model is consistent with profit maximization by a firm.
 
 %In this experiment, the aggregate amount of renewable energy is set to be the total IT demand multiplied by a coefficient, where the coefficient series is the integer multiples of 0.5 within [0.5, 4]. We run the experiment under both summer and winter weather.
 
-Our first experiment explores the cost efficiency of this model. Figure 2 illustrates the extent of total cost savings of our model. We choose the total cost under Cooling-oblivious GLB and LOCAL as the benchmark. The Cooling-aware model gives lower cost than both benchmarks. Its advantage is rather clear under two situations. First, in summer when cooling is expensive, the Cooling-aware model significantly outperforms the Cooling-oblivious model; by considering the energy cost of cooling, it makes routing decisions that better use renewable energy. Second, when the aggregate renewable energy available lies between one and two times the aggregate demand, and some but not all data center locations have a surplus in renewables, the Cooling-aware GLB model exploits this surplus better than the benchmarks.
+\begin{figure*}
+\centering
+\epsfig{file=cost_comparison.pdf, width=0.5\textwidth}
+\caption{Comparison of optimal costs under Cooling-aware GLB, Cooling-oblivious GLB, and LOCAL, with varying renewable energy availability.}
+\label{fig:cost_comparison}
+\end{figure*}
 
-We are interested in how well the Cooling-aware GLB model performs under different seasons and weather conditions. Figure 3 shows the difference between the optimized costs in summer and in winter using each model. The previous Cooling-oblivious model’s performance varies significantly with season; our Cooling-aware GLB model’s performance is more robust. This finding reflects the fact that our Cooling-aware model exploits the heterogeneity in weather to reduce the energy required for cooling.
+Our first experiment explores the cost efficiency of this model. \autoref{fig:cost_comparison} illustrates the extent of total cost savings of our model. We choose the total cost under Cooling-oblivious GLB and LOCAL as the benchmark. The Cooling-aware model gives lower cost than both benchmarks. Its advantage is rather clear under two situations. First, in summer when cooling is expensive, the Cooling-aware model significantly outperforms the Cooling-oblivious model; by considering the energy cost of cooling, it makes routing decisions that better use renewable energy. Second, when the aggregate renewable energy available lies between one and two times the aggregate demand, and some but not all data center locations have a surplus in renewables, the Cooling-aware GLB model exploits this surplus better than the benchmarks.
+
+\begin{figure}
+\centering
+\epsfig{file=cost_diff.pdf, width=0.5\textwidth}
+\caption{The difference between optimal costs in summer/winter for both Cooling-aware and Cooling-oblivious GLB}
+\label{fig:cost_diff}
+\end{figure}
+
+We are interested in how well the Cooling-aware GLB model performs under different seasons and weather conditions. \autoref{fig:cost_diff} shows the difference between the optimized costs in summer and in winter using each model. The previous Cooling-oblivious model’s performance varies significantly with season; our Cooling-aware GLB model’s performance is more robust. This finding reflects the fact that our Cooling-aware model exploits the heterogeneity in weather to reduce the energy required for cooling.
 %\begin{figure}
 %\centering
 %\epsfig{file=opt_cost_comparison.pdf, height=2.2in, width=3.2in}
@@ -329,12 +337,13 @@ We are interested in how well the Cooling-aware GLB model performs under differe
 
 \begin{figure}
 \centering
-\epsfig{file=carbon_summer.pdf, height=2.2in, width=3.2in}
-\caption{Comparison of carbon emission of Cooling-aware GLB, Cooling-oblivious GLB and LOCAL}
+\epsfig{file=carbon_summer.pdf, width=0.5\textwidth}
+\caption{Comparison of carbon emissions under Cooling-aware GLB, Cooling-oblivious GLB, and LOCAL}
+\label{fig:carbon_summer}
 \end{figure}
 
 
-The geographical load balancing method model exploits variation in energy costs by routing requests to where energy cost is low. When the data centers have on-site renewable energy plants (as in our setting), renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has the desirable side-effect of reducing carbon emissions.
+The geographical load balancing model exploits variation in energy costs by routing requests to where energy cost is low. When the data centers have on-site renewable energy plants (as in our setting), renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has the desirable side-effect of reducing carbon emissions.
 
 We can estimate the \carbondioxide{} emissions by multiplying the grid energy usage of each data center location by the \carbondioxide{} emissions per energy unit. Figure 4 shows the \carbondioxide{} emission comparison of each model in summer. By using the Cooling-aware GLB model, aggregate carbon emissions can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, carbon emissions under Cooling-aware GLB is less than half those of Cooling-oblivious GLB.
 
@@ -343,16 +352,25 @@ The environmental impact of our new model is significant. \carbondioxide{} emiss
 
 \subsection{GLB versus storage}
 
-\begin{figure}
-\centering
-\epsfig{file=cost_storage.pdf, height=2.2in, width=3.2in}
-\caption{Comparison of optimal costs of the storage model and the Cooling-aware GLB model.}
-\end{figure}
-\begin{figure}
-\centering
-\epsfig{file=brown_storage.pdf, height=2.2in, width=3.2in}
-\caption{Comparison of brown energy usage of the storage model and the Cooling-aware GLB model.}
-\end{figure}
+\begin{figure*}
+	\centering
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\epsfig{file=cost_storage.pdf, width=\textwidth}
+		\caption{Cost}
+		\label{fig:storage_vs_cooling:cost}
+	\end{subfigure}%
+	~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\epsfig{file=brown_storage.pdf, width=\textwidth}
+		\caption{Brown energy usage}
+		\label{fig:storage_vs_cooling:brown}
+	\end{subfigure}
+	\caption{Comparison of optimal cost (\ref{fig:storage_vs_cooling:cost}) and brown energy usage (\ref{fig:storage_vs_cooling:brown}) under the storage model and the Cooling-aware GLB model}
+	\label{fig:storage_vs_cooling}
+\end{figure*}
+
 One alternative way of using renewable energy efficiently is to store excess available renewables for future use. Whereas applying geographical load balancing adjusts energy demand according to supply in each location, adding energy storage adjusts supply according to demand. We are interested in the performance characteristics of both methods.
 
 In this experiment, we compare the cost curve and the brown-energy usage curve of using GLB and using storage. Since our experiment starts at midnight, the time when the data centers are likely to have used all of its storage for batch jobs \cite{adam:cooling}, we assume that the storage starts empty.
