@@ -4,6 +4,7 @@
 
 \usepackage{hyperref}
 \usepackage{chemformula}
+\usepackage{verbatim}
 
 % Multi-part figures
 \usepackage{caption}
@@ -384,7 +385,8 @@ Our simulation and visualization software can be used to answer questions about 
 \item incorporating other kinds of renewables into the model
 \item treating data centers as endogenous. In the long run, where should we build new data centers, and what local renewables and energy storage systems do we use?
 \item finding the optimal control timescale. It is costly to switch servers on and off, so the current algorithms only change routing every fixed period, which is suboptimal. This significantly restricts the savings that follow-the-renewables routing can yield, but the topic hasn’t yet been explored deeply. Being able to simulate the whole system helps for this.
-\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the internet, one might expect solar power to dominate. But Wierman’s paper @@@@[which] showed that in fact wind is more effective, because its low spatial and temporal correlation is especially useful for geographical load balancing. With solar power, when requests come at night DCs are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
+\item helping discover and then exploit emergent phenomena when looking at systems of many data centers. An example of such a phenomenon deals with the optimal mix of renewable energy for powering data centers. Since the sun shines in the daytime when people are awake and searching the internet, one might expect solar power to dominate. But previous work % Wierman’s paper @@@@[which]
+showed that in fact wind is more effective, because its high variability and low spatial and temporal correlation with demand is especially useful for geographical load balancing. With solar power, when requests come at night DCs are forced to buy electricity off the grid, but with wind power, it’s almost always windy somewhere.
 \end{itemize}
 
 \printbibliography
