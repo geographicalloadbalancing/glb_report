@@ -310,7 +310,7 @@ The cooling-aware geographical load balancing model reduces firm’s energy cost
 \begin{figure*}
 \centering
 \epsfig{file=cost_comparison.pdf, width=\textwidth}
-\caption{Comparison of optimal costs under Cooling-aware GLB, Cooling-oblivious GLB, and LOCAL, with varying renewable energy availability.}
+\caption{Comparison of optimal costs under Cooling-aware GLB, Cooling-oblivious GLB, and LOCAL, with varying renewable energy availability, in summer (left) and winter (right)}
 \label{fig:cost_comparison}
 \end{figure*}
 
@@ -333,7 +333,9 @@ We are interested in how well the Cooling-aware GLB model performs under differe
 
 
 \subsection{Environmental impact: \carbondioxide{} savings}
+The geographical load balancing model exploits variation in energy costs by routing requests to where energy cost is low. When the data centers have on-site renewable energy plants (as in our setting), renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has the desirable side-effect of reducing carbon emissions.
 
+We can estimate the \carbondioxide{} emissions by multiplying the grid energy usage of each data center location by the \carbondioxide{} emissions per energy unit. \autoref{fig:carbon_summer} shows the \carbondioxide{} emission comparison of each model in summer. By using the Cooling-aware GLB model, aggregate carbon emissions can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, carbon emissions under Cooling-aware GLB is less than half those of Cooling-oblivious GLB.
 
 \begin{figure}
 \centering
@@ -341,11 +343,6 @@ We are interested in how well the Cooling-aware GLB model performs under differe
 \caption{Comparison of carbon emissions under Cooling-aware GLB, Cooling-oblivious GLB, and LOCAL}
 \label{fig:carbon_summer}
 \end{figure}
-
-
-The geographical load balancing model exploits variation in energy costs by routing requests to where energy cost is low. When the data centers have on-site renewable energy plants (as in our setting), renewable energy becomes cheap; the model allows optimal usage of these renewables and thus has the desirable side-effect of reducing carbon emissions.
-
-We can estimate the \carbondioxide{} emissions by multiplying the grid energy usage of each data center location by the \carbondioxide{} emissions per energy unit. Figure 4 shows the \carbondioxide{} emission comparison of each model in summer. By using the Cooling-aware GLB model, aggregate carbon emissions can be reduced by more than 50\% as compared to LOCAL if the total renewable energy supply is equal to the total IT demand. If more renewable energy is available, carbon emissions under Cooling-aware GLB is less than half those of Cooling-oblivious GLB.
 
 The environmental impact of our new model is significant. \carbondioxide{} emissions are reduced even when firms’ optimizations do not consider the environmental externality of \carbondioxide{} emissions. Environmental benefits could be even greater if firms are given incentives to be environmentally friendly.
 
@@ -371,13 +368,13 @@ The environmental impact of our new model is significant. \carbondioxide{} emiss
 	\label{fig:storage_vs_cooling}
 \end{figure*}
 
-One alternative way of using renewable energy efficiently is to store excess available renewables for future use. Whereas applying geographical load balancing adjusts energy demand according to supply in each location, adding energy storage adjusts supply according to demand. We are interested in the performance characteristics of both methods.
+One alternative way of using renewable energy efficiently is to store renewables available in excess of current demand for future use. Whereas applying geographical load balancing adjusts energy demand according to supply in each location, adding energy storage adjusts supply according to demand. We are interested in the performance characteristics of both methods.
 
-In this experiment, we compare the cost curve and the brown-energy usage curve of using GLB and using storage. Since our experiment starts at midnight, the time when the data centers are likely to have used all of its storage for batch jobs \cite{adam:cooling}, we assume that the storage starts empty.
+In this experiment, we compare the cost curve and the brown-energy usage curve of using GLB and using storage. Since our experiment starts at midnight, at which time a data center has likely used all of its storage for batch jobs \cite{adam:cooling}, we assume that the storage starts empty.
 
-Figure 5 illustrates the trend of optimal costs of these models with respect to varying renewable availability. It shows that Cooling-aware GLB has lower costs when the total renewable energy is less than 1.5 times the aggregate IT demand, and the storage model is better when renewable energy is in large surplus.
+\autoref{fig:storage_vs_cooling:cost} illustrates the trend of optimal costs under the two models with respect to varying renewable availability. It shows that Cooling-aware GLB has lower costs when the total renewable energy is less than 1.5 times the aggregate IT demand, but is outperformed by the storage model when renewable energy is in large surplus.
 
-Figure 6 compares brown energy under each model. The result suggests that the Cooling-aware GLB model needs less energy from the grid compared to the 6-hour-storage curve when the total renewable supply is less than 1.5 times of the total IT power demand. Moreover, it needs less grid energy than the total renewable energy compared to the 3-hour-storage model, in almost the entire renewable availability interval, except when the renewable availability coefficient is 0.5. The environmental impact advantage of our new model is even more salient than the cost advantage.
+\autoref{fig:storage_vs_cooling:brown} compares brown energy usage under each model. The result suggests that the Cooling-aware GLB model needs less energy from the grid compared to the 6-hour-storage curve when the total renewable supply is less than 1.5 times of the total IT power demand. Moreover, it needs less grid energy than the total renewable energy compared to the 3-hour-storage model, in almost the entire renewable availability interval, except when the renewable availability coefficient is 0.5. The environmental impact advantage of our new model is even more salient than the cost advantage.
 
 We thus can conclude that our model is better than the storage model when the renewable generation facilities are not yet built, because it requires less prior infrastructure investment.
 
