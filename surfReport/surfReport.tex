@@ -315,7 +315,11 @@ The cooling-aware geographical load balancing model reduces firm’s energy cost
 \label{fig:cost_comparison}
 \end{figure*}
 
-Our first experiment explores the cost efficiency of this model. \autoref{fig:cost_comparison} illustrates the extent of total cost savings of our model over previous models, in summer and winter. We use as a benchmark the total costs under Cooling-oblivious GLB (the previous GLB optimization that does not consider cooling) and LOCAL (i.e. traditional routing without GLB, routing all requests to the nearest DC). The Cooling-aware model gives lower cost than either benchmark. Its advantage is rather clear under two situations. First, in summer when cooling is expensive (\autoref{fig:cost_comparison}, left), the Cooling-aware model significantly outperforms the Cooling-oblivious model; by considering the energy cost of cooling, it makes routing decisions that better use renewable energy. Second, when the aggregate renewable energy available lies between one and two times the aggregate demand, and some but not all data center locations have a surplus in renewables, the Cooling-aware GLB model exploits this surplus better than the benchmark models.
+Our first experiment explores the cost efficiency of this model. \autoref{fig:cost_comparison} illustrates the extent of total cost savings of our model over previous models, in summer and winter. We use as benchmarks the total costs under Cooling-oblivious GLB (the previous GLB optimization that does not consider cooling) and LOCAL (i.e. traditional routing without GLB, routing all requests to the nearest DC). The Cooling-aware model gives lower cost than either benchmark. Its advantage is clearest in two situations.
+
+First, in summer when cooling is expensive (\autoref{fig:cost_comparison}, left), the Cooling-aware model significantly outperforms the Cooling-oblivious model. By considering the energy cost of cooling, it makes routing decisions that better use renewable energy.
+
+Second, when the aggregate renewable energy available lies between one and two times the aggregate demand, and some but not all data center locations have a surplus in renewables, the Cooling-aware GLB model exploits this surplus better than the benchmark models.
 
 \begin{figure}
 \centering
