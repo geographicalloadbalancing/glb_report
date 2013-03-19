@@ -11,7 +11,7 @@ report : surfReport.tex $(patsubst %.eps,%.pdf,$(wildcard eps/*.eps))
 report_display : report
 	xdg-open surfReport.pdf
 
-presentation : presentation.tex svg/nearestrouting.pdf svg/glbrouting.pdf
+presentation : presentation.tex svg/nearestrouting.pdf svg/glbrouting.pdf $(patsubst %.eps,%.pdf,$(wildcard eps/*.eps))
 	pdflatex presentation.tex
 	pdflatex presentation.tex
 
