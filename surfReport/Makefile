@@ -1,6 +1,6 @@
 all : report presentation
 
-report : surfReport.tex
+report : surfReport.tex $(patsubst %.eps,%.pdf,$(wildcard eps/*.eps))
 	pdflatex surfReport.tex
 	bibtex surfReport
 	pdflatex surfReport.tex
@@ -18,6 +18,8 @@ presentation : presentation.tex svg/nearestrouting.pdf svg/glbrouting.pdf
 presentation_display : presentation
 	xdg-open presentation.pdf
 
-# Convert SVGs to PDF so that pdflatex can use them
-svg/%.pdf: svg/%.svg
+# Convert images to PDF so that pdflatex can use them
+svg/%.pdf : svg/%.svg
 	inkscape $< --export-pdf=$@
+eps/%.pdf : eps/%.eps
+	epstopdf $< --outfile=$@
